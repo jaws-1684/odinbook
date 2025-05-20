@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+body {
+	background-image: url(pexels-apasaric-3310691.jpg);
+}
+
