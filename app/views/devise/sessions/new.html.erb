@@ -1,28 +1,56 @@
-<div class="bg-white rounded-lg shadow-md p-8 w-full mx-auto my-16 max-w-md h-96">
-  <h2 class="text-2xl font-semibold text-blue-600 mb-6">Log in</h2>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-    </div>
+  <div class="b-login pt-12">
+    <h2 class="text-2xl mb-4 pb-4 text-center">Sign in to <b class="text-blue-400">Odinbook</b></h2>
 
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password" %>
-    </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field mb-2 flex flex-col gap-[2px]">
+          <%= f.label :email, "Email address"%><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "johndoe@email.com" %>
+        </div>
 
-    <% if devise_mapping.rememberable? %>
-      <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+        <div class="field mb-2 field mb-4 flex flex-col gap-[2px]">
+          <%= f.label :password, class: "" %><br />
+          <%= f.password_field :password, autocomplete: "current-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "********" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field mb-2">
+            <%= f.check_box :remember_me, class: "accent-blue-500" %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end %>
+
+    
+          <%= f.submit "Sign in", class: "actions bg-blue-400 rounded-sm shadow-md text-center p-1 text-white cursor-pointer w-full" %>
+     
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <p class="bg-white dark:bg-gray-800 px-2 text-gray-500 dark:text-gray-400">Or continue with</p>
+        </div>
       </div>
-    <% end %>
 
-    <div class="actions">
-      <%= f.submit "Log in" %>
-    </div>
-  <% end %>
+      <div class="oauth flex justify-evenly items-center gap-4 pt-4">
+        <div class="github w-12 border-1 border-gray-400/50 w-14 p-2 bg-gray-100 rounded-sm">
+            <a href="https://github.com/login/oauth/authorize">
+            <%= image_tag "25231.png" %>
+          </a>
+        </div>
 
-  <%= render "devise/shared/links" %>
-</div>
+
+        <div class="google w-12 border-1 border-gray-400/50 w-14 p-2 bg-gray-100 rounded-sm">
+         <a href="https://accounts.google.com/o/oauth2/auth">
+            <%= image_tag "Google_Icons-09-512.png" %>
+        </a>
+        </div>
+      </div>
+      
+  
+  
+            

@@ -1,29 +1,33 @@
-<h2>Sign up</h2>
+  <div class="b-sign-up">
+    <h2 class="text-2xl mb-4 pb-4 text-center">Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <div class="field mb-2 flex flex-col gap-[2px]">
+          <%= f.label :email, "Email address"%><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "johndoe@email.com" %>
+        </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+      <div class="field field mb-2 field mb-4 flex flex-col gap-[2px]">
+        <div class="pass">
+             <%= f.label :password %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+        </div>
+       
+        <%= f.password_field :password, autocomplete: "new-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic" %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+      <div class="field pt-4">
+        <%= f.submit "Sign up", class: "actions bg-blue-400 rounded-sm shadow-md text-center p-1 text-white cursor-pointer w-full" %>
+      </div>
+    <% end %>
 
-<%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %>
