@@ -24,17 +24,8 @@
 
   <body>
     <main>
-      <div class="grid grid-cols-12 grid-rows-12 h-dvh">
-        <div class="bg-[#ffffff] rounded-xl shadow-md col-start-6 col-end-8 row-start-3 row-end-9 flex flex-col w-[360px] h-[510px] justify-center items-center g-4">
-         <% flash.each do |name, msg| -%>
-            <% if name == "alert" %>
-              <%= content_tag :div, msg, class: "p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 role='alert' absolute top-45" %>
-            <% else -%>
-               <%= content_tag :div, msg, class: name %>
-            <% end -%>
-         <% end -%>
-          <%= yield %>
-        </div>
+      <div class="grid grid-cols-12 grid-rows-12 h-dvh ">
+        <%= yield %>
       </div>
     </main>
   </body>

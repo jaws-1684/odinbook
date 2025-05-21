@@ -10,11 +10,3 @@ body {
 *:focus {
   outline: none !important;
 }
-
-.forgot-password {
-  position: relative;
-  top: -184px;
-  left: 150px;
-  font-size: 14px;
-  font-weight: bold;
-}
