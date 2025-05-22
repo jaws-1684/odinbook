@@ -120,6 +120,8 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -223,6 +225,9 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
+    omniauth-github (2.0.1)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8)
     omniauth-google-oauth2 (1.2.1)
       jwt (>= 2.9.2)
       oauth2 (~> 2.0)
@@ -440,9 +445,11 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   dotenv-rails
+  faker
   importmap-rails
   jbuilder
   kamal
+  omniauth-github (~> 2.0)
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)
   pg (~> 1.1)
