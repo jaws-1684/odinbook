@@ -1,4 +1,3 @@
-      <% require 'faker' %>
 <nav class="b-header w-dvw bg-white text-gray-400 shadow-md z-10 basis">
 
   <div class="flex justify-center items-start">
@@ -28,34 +27,40 @@
     <div class="b-left bg-blue-900 w-sm"></div>
 
     <div class="b-center w-4xl pt-4 pl-2 pr-2 pb-4 flex flex-col gap-4">
-      <div class="b-create w-full h-full border-1 border-gray-400/50 bg-white rounded-xl">
-            <div class="create-post p-3">
-              <span>Create a post</span>
+      <div class="b-create w-full h-sm border-1 border-gray-400/50 bg-white rounded-xl">
+            <div class="create-post p-3 w-auto">
+              <%= turbo_frame_tag "post" do %>
+                <span><%= link_to "New Post", new_post_path %></span>
+              <% end %>
+              
+            
             </div>
 
-        </div>
-      <div class="b-posts w-full h-full border-1 border-gray-400/50 bg-white rounded-xl p-4">
+      </div>
+
+      <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl p-4">
   
+        <% @posts.includes(:user).each do |post| -%>
+      
+              <div class="post mb-12">
+                <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]"><span></span>
+                <h2><%= post.title %></h2>
+                <img src="<%= post.image_url %>" alt="" class="w-[100px]"><span></span>
+                <p><%= post.body %></p>
+               
+                
+              </div>
 
-      <% 10.times do %>
-        <div class="post mb-12">
-          <img src="https://picsum.photos/50" alt="" class="inline mr-2 [clip-path:circle(40%)]"><span>By <%= Faker::Name.name %></span>
-          <h2><%= Faker::Book.title %></h2>
-          <p><%= Faker::Lorem.paragraph(sentence_count: 5) %></p>
-         
-          
-        </div>
-
-        <div class="b-actions text-end">
-          <span>like</span>
-          <span>comments</span>
-        </div>
-      <% end %>
+              <div class="b-actions text-end">
+                <span>like</span>
+                <span>comments</span>
+              </div>
+        <% end -%>
 
       </div>
     </div>
 
-    <div class="b-right w-2xl pt-4 pl-4 pb-4 mt-17 flex flex-col gap-2">
+    <div class="b-right w-2xl h-auto pt-4 pl-4 pb-4 mt-17 flex flex-col gap-2">
       <div class="image">
          <img src="https://picsum.photos/600" alt="" class="object-cover rounded-xl">
       </div>
@@ -74,6 +79,7 @@
 
        
     </div>
+
   </div>
 </div>
 
