@@ -14,10 +14,10 @@ class PostsController < ApplicationController
 	def create
 		@post = current_user.posts.build(post_params)
 
-		if @post.save!
+		if @post.save
 			redirect_to posts_path, status: :see_other, notice: "Post was successfully created!"
 		else
-			flash[:errors].now = "There was an error creating your post."
+			flash.now[:errors] = "There was an error creating your post."
 			render 'new', status: :unprocessable_entity
 		end
 	end
@@ -32,7 +32,7 @@ class PostsController < ApplicationController
 		if @post.update
 			redirect_to posts_path, status: :see_other, notice: "Post was successfully updated!"
 		else
-			flash[:errors].now = "There was an error updating your post."
+			flash.now[:errors] = "There was an error updating your post."
 			render 'new', status: :unprocessable_entity
 		end	
 	end

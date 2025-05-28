@@ -9,12 +9,12 @@
      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="field mb-2 flex flex-col gap-[2px]">
           <%= f.label :email, "Email address"%>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "johndoe@email.com" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-full h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "johndoe@email.com" %>
         </div>
 
         <div class="field mb-2 field mb-4 flex flex-col gap-[2px]">
           <%= f.label :password, class: "" %>
-          <%= f.password_field :password, autocomplete: "current-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "********" %>
+          <%= f.password_field :password, autocomplete: "current-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-full pl-2 bg-gray-100 placeholder:italic", placeholder: "********" %>
         </div>
 
         <div class="b-remememberable-forgot flex justify-between text-sm mb-2 text-gray-800">
