@@ -52,65 +52,32 @@
      </ul>
     </div>
 
-    <div class="b-center w-4xl pt-4 pl-2 pr-2 pb-4 flex flex-col gap-4">
-      <div class="b-create w-full h-sm border-1 border-gray-400/50 bg-white rounded-xl text-sm p-2">
-           
-              <%= turbo_frame_tag "post" do %>
-
-               <div><%= link_to new_post_path, class: "text-blue-500 font-semibold hover:text-blue-400" do %>
-                   <div class="create-post w-md flex justify-center items-center cursor-pointer">
-                    <div class="ico">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25" fill="#2c80ff" class="bi bi-plus font-bold" viewBox="0 0 16 16">
-                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                      </svg>
-                    </div>
-
-                    <p>New Post</p>
-                  
-                 </div>
-                 <% end -%>
-                </div>
-              <% end %>
-              
-            
-            
-
-      </div>
-
-      <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm">
-  
-        <% @posts.includes(:user).each do |post| -%>
-      
-              <div class="post mb-2">
-                <div class="container flex justify-between items-start p-2">
-                  <div class="b-left text-xs font-semibold">
-                    <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]"><span><%= current_user.full_name%></span>
-                  </div>
-                   
-                   <p class="mt-2">some options</p>
-                </div>
-               
-                <h2 class="font-semibold text-md pl-2 pb-2"><%= post.title %></h2>
-                <img src="<%= post.image_url %>" alt="" class="w-full"><span></span>
-                <p class="p-2"><%= post.body %></p>
-                 
-                
-              </div>
-
-              <div class="b-bottom flex justify-between items-center pl-2 pr-2 pb-2">
-                 <div class="b-time text-xs font-semibold">
-                  <%= post.updated_at.to_formatted_s(:short)   %>
-                </div>
-               
-                <div class="b-actions">
-                  <span class="mr-2">like</span><span>comments</span>
-                </div>
-              </div>
-            
+   <div class="b-center w-4xl pt-4 pl-2 pr-2 pb-4 flex flex-col gap-4">
+  <div class="b-create w-full h-sm border-1 border-gray-400/50 bg-white rounded-xl text-sm p-2">
+    <%= turbo_frame_tag "new_post" do %>
+     <div><%= link_to new_post_path, class: "text-blue-500 font-semibold hover:text-blue-400" do %>
+         <div class="create-post w-md flex justify-center items-center cursor-pointer">
+          <div class="ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25" fill="#2c80ff" class="bi bi-plus font-bold" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+            </svg>
+          </div>
+          <p>New Post</p>
+        </div>
         <% end -%>
-
       </div>
+    <% end %>
+  </div>
+  
+  <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm">
+    <!-- Add this container ID for turbo stream targeting -->
+    <div id="posts-container">
+      <% @posts.includes(:user).order(created_at: :desc).each do |post| -%>
+        <%= render "post", post: post %>
+      <% end -%>
     </div>
+  </div>
+</div>
 
     <div class="b-right w-2xl h-auto pt-4 pl-4 pb-4 flex flex-col gap-2">
         <div class="image text-md">

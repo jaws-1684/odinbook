@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "comments_post_#{@post.id}" do %>
+  <div class="w-full flex flex-col bg-white rounded-xl shadow-md p-2 text-xs">
+      <%= link_to 'x', posts_path, class: 'inline-block ml-1 text-sm text-red-600 hover:underline self-end' %>
+    <p id="notice" class="text-green-600 mb-4"><%= notice %></p>
+
+    <!-- Comments Card -->
+    <%= render partial: "comments/shared/posts_comments" %>
+
+  
+  </div>
+<% end -%>

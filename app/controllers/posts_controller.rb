@@ -12,15 +12,18 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		@post = current_user.posts.build(post_params)
-
-		if @post.save
-			redirect_to posts_path, status: :see_other, notice: "Post was successfully created!"
-		else
-			flash.now[:errors] = "There was an error creating your post."
-			render 'new', status: :unprocessable_entity
-		end
-	end
+    @post = current_user.posts.build(post_params)
+    
+    respond_to do |format|
+      if @post.save
+        format.turbo_stream # This will render create.turbo_stream.erb
+        format.html { redirect_to posts_path, notice: 'Post created successfully!' }
+      else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_post", partial: "new", locals: { post: @post }) }
+        format.html { render :new, status: :unprocessable_entity }
+      end
+    end
+  end
 
 	def edit
 		@post = Post.find(params[:id])
