@@ -1,30 +1,20 @@
-<%= turbo_frame_tag "comment_#{comment.id}" do %>
-<div class="card ml-5 mb-2">
-  <div class="card-body">
-    <%= form_with(model: [@post, @comment]) do |f| %>
-      <%= f.hidden_field :parent_id %>
-      <div class="form-group flex gap-2 items-center mt-2">
-        <%= f.text_area :body, placeholder: "your comment here", class: 'text-gray-900 block w-full rounded-md border-gray-300 shadow-sm h-[30px] focus:ring-indigo-500 focus:border-indigo-500 p-2' %>
-         <%= f.submit 'reply', class: 'text-blue-600 h-[30px] p-2 border border-transparent rounded-md hover:text-blue-900 cursor-pointer' %>
-         
-      </div>
-     
-    <% end -%>
-  </div>
-</div>
+<% model = [local_assigns[:commentable], comment].compact %>
+
+
+<%= form_with model: model, id: dom_id_form_records(*model),
+ data: local_assigns[:data], 
+ class: ["ml-4"] + Array.wrap(local_assigns[:class]) do |form| %>
+
+	<% if form.object.errors.any? %>
+		<div>
+			<% form.object.errors.full_messages.each do |message|%>
+				<div><%= message %></div>
+			<% end -%>
+		</div>
+	<% end -%>
+
+	<%= form.text_area :body %>
+	<%= form.submit class: "text-blue-700 cursor-pointer" %>
+	<%= link_to "Cancel", comment, class: "bg-red400" if form.object.persisted? %>
 <% end -%>
 
-<%= turbo_frame_tag "reply_" do %>
-<div class="card ml-5">
-  <div class="card-body">
-    <%= form_with(model: [@post, @comment]) do |f| %>
-      <%= f.hidden_field :parent_id %>
-      <div class="form-group flex gap-2 items-center mt-2">
-        <%= f.text_area :body, placeholder: "your comment here", class: 'text-gray-900 block w-full rounded-md border-gray-300 shadow-sm h-[30px] focus:ring-indigo-500 focus:border-indigo-500 p-2' %>
-         <%= f.submit 'reply', class: 'text-blue-600 h-[30px] p-2 border border-transparent rounded-md hover:text-blue-900 cursor-pointer' %>
-      </div>
-     
-    <% end -%>
-  </div>
-</div>
-<% end -%>

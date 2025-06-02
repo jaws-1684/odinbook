@@ -70,7 +70,7 @@
   </div>
   
   <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm">
-    <!-- Add this container ID for turbo stream targeting -->
+
     <div id="posts-container">
       <% @posts.includes(:user).order(created_at: :desc).each do |post| -%>
         <%= render "post", post: post %>
@@ -95,4 +95,4 @@
   </div>
 </div>
 
-<%# <%= image_tag current_user.avatar_url %>                 
+       

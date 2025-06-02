@@ -1,38 +1,12 @@
-<% unless comment.parent_id || !comment.persisted? %>
-  <div class="container">
-    
-     <div class="p-1 border-b-1 border-gray-400 flex flex-col">
-        <div class="b-content flex gap-2 mb-2">
-           <div class="b-image">
-              <%= image_tag comment.user.avatar_url, class: "w-[40px] h-[40px] [clip-path:circle(40%)]" %>
-           </div>
+<%= turbo_stream_from comment %>
 
-           <div class="user-body flex flex-col">
-            <div class="container">
-              <%= comment.user.full_name %>
-            </div>
-            
-            <div class="container text-sm">
-               <%= comment.body %>
-            </div>
-           
-        </div>
-    </div>
-   
-    
-    <div class="link">
-       <span><%= time_ago_in_words(comment.created_at) %>&nbspago</span>
-     <%= turbo_frame_tag "comment_#{comment.id}" do %>
-  <%= link_to 'reply', new_post_comment_path(comment.post, parent_id: comment.id), remote: true, class: 'text-blue-700 cursor-pointer' %>
-  <%= link_to "Edit", edit_post_comment_path(comment.post, comment), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-<% end %>
-    </div>
-  </div>
-  <% if comment.replies.any? %>
-      <% comment.replies.each do |reply| %> 
-        <%= render partial: 'comments/reply', locals: { reply: reply } %>
-      <% end %>
-  <% end %>
-<% end -%>
-
-
+<%= turbo_frame_tag comment do %>
+		<div class="flex justify-between">
+			<div><%= comment.user.full_name %></div>
+			<div><%= link_to "Edit", edit_comment_path(comment)%>
+				<%= link_to "Delete", comment_path(comment), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+			</div>
+		</div>
+		<%= comment.body %>
+		<hr />
+<% end -%> 

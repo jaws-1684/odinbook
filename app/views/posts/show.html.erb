@@ -1,11 +1,32 @@
-<%= turbo_frame_tag "comments_post_#{@post.id}" do %>
-  <div class="w-full flex flex-col bg-white rounded-xl shadow-md p-2 text-xs">
-      <%= link_to 'x', posts_path, class: 'inline-block ml-1 text-sm text-red-600 hover:underline self-end' %>
-    <p id="notice" class="text-green-600 mb-4"><%= notice %></p>
 
-    <!-- Comments Card -->
-    <%= render partial: "comments/shared/posts_comments" %>
-
-  
+  <div class="page-header">
+    <%= link_to posts_path, class: 'btn btn-default' do %>
+      All Posts
+    <% end %>
+    <%= link_to edit_post_path(@post), class: 'btn btn-primary' do %>
+      Edit
+    <% end %>
+    <h1>Show post</h1>
   </div>
+
+  <dl class="dl-horizontal">
+    <dt>Title:</dt>
+    <dd><%= @post.title %></dd>
+
+    <dt>Body:</dt>
+    <dd><%= @post.body %></dd>
+  </dl>
+
+  <hr />
+
+<%= turbo_frame_tag "post_#{@post.id}_comments" do %>
+
+  <h4>Comments</h4>
+
+  <%= render partial: "comments/form", locals: {comment: Comment.new, commentable: @post} %>
+
+  <%= turbo_stream_from @post, :comments %>
+  <%= tag.div id: "#{dom_id(@post)}_comments" do %>
+   <%= render partial: "comments/comment_with_replies", collection: @post.comments.where(parent_id: nil), as: :comment %>
+  <% end -%>
 <% end -%>

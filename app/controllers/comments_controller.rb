@@ -1,71 +1,36 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show edit update destroy ]
+	before_action :set_comment
 
-  # GET /comments or /comments.json
-  def index
-    @comments = Comment.all
-  end
+	def show
 
-  # GET /comments/1 or /comments/1.json
-  def show
-  end
+	end
 
-  # GET /comments/new
-  def new
-   @post = Post.find(params[:post_id])
-   @comment = @post.comments.new(parent_id: params[:parent_id])
-  end
+	def edit
+	end
 
+	def update
+		if @comment.update(comment_params)
+			redirect_to @comment
+		else
+			render :edit, status: :unprocessable_entity
+		end
+	end
 
-  # GET /comments/1/edit
-  def edit
-  end
+	def destroy
+		@comment.destroy
+		respond_to do |format|
+			format.turbo_stream {}
+			format.html {redirect_to @comment.commentable}
+		end
+	end
 
-  # POST /comments or /comments.json
-  def create
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.build(comment_params)
-    @comment.user = current_user # optional, if you associate comments with users
+	private
 
-    if @comment.save
-      redirect_to @post, notice: "Comment posted!"
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
+		def set_comment
+			@comment = current_user.comments.find(params[:id])
+		end
 
-
-  # PATCH/PUT /comments/1 or /comments/1.json
-  def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: "Comment was successfully updated." }
-        format.json { render :show, status: :ok, location: @comment }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /comments/1 or /comments/1.json
-  def destroy
-    @comment.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params.expect(:id))
-    end
-
-    # Only allow a list of trusted parameters through.
-    def comment_params
-      params.expect(comment: [:body, :post_id, :parent_id])
-    end
+		def comment_params
+			params.expect(comment: [:body])
+		end
 end

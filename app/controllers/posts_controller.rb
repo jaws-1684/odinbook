@@ -16,10 +16,9 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       if @post.save
-        format.turbo_stream # This will render create.turbo_stream.erb
+        format.turbo_stream
         format.html { redirect_to posts_path, notice: 'Post created successfully!' }
       else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_post", partial: "new", locals: { post: @post }) }
         format.html { render :new, status: :unprocessable_entity }
       end
     end

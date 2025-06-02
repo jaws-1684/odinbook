@@ -18,12 +18,11 @@
     <div class="b-actions flex text-blue-700">
       <div class="mr-2 cursor-pointer">like</div>
       <div>
-        <%= link_to "comments", post_path(post), data: { turbo_frame: "comments_post_#{post.id}" }, class: "cursor-pointer" %>
+        <%= link_to "comments", post_path(post), class: "cursor-pointer", data: { turbo_frame: "post_#{post.id}_comments" } %>
       </div>
     </div>
   </div>
-  
-  <%= turbo_frame_tag "comments_post_#{post.id}" do %>
-    <!-- Comments content will load here -->
-  <% end %>
+
+  <%= turbo_frame_tag "post_#{post.id}_comments" do %>
+  <% end -%>
 </div>
