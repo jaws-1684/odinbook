@@ -1,4 +1,3 @@
-
   <div class="page-header">
     <%= link_to posts_path, class: 'btn btn-default' do %>
       All Posts
@@ -19,14 +18,3 @@
 
   <hr />
 
-<%= turbo_frame_tag "post_#{@post.id}_comments" do %>
-
-  <h4>Comments</h4>
-
-  <%= render partial: "comments/form", locals: {comment: Comment.new, commentable: @post} %>
-
-  <%= turbo_stream_from @post, :comments %>
-  <%= tag.div id: "#{dom_id(@post)}_comments" do %>
-   <%= render partial: "comments/comment_with_replies", collection: @post.comments.where(parent_id: nil), as: :comment %>
-  <% end -%>
-<% end -%>

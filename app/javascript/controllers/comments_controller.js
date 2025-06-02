@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "link"]
+  static targets = ["post_comments"]
 
   toggle(event) {
     event.preventDefault()
-    this.formTarget.classList.toggle("hidden")
+    this.post_commentsTarget.classList.toggle("hidden")
   }
 }

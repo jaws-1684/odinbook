@@ -10,3 +10,11 @@ body {
 *:focus {
   outline: none !important;
 }
+
+.form-group.flex.justify-evenly.mb-4 input {
+  border: 1px solid lightgray;
+}
+
+.form-group.flex.justify-evenly.mb-4 input:focus {
+  border: 1px solid lightblue;
+}

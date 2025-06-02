@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     omniauth_callbacks: 'users/omniauth_callbacks'}
     
-  resources :posts do
+  resources :posts, path: "/feed/" do
      resources :comments, module: :posts
    end
 

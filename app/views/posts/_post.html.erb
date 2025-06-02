@@ -1,4 +1,4 @@
-<div class="post mb-2">
+<div class="post mb-2" data-controller="comments">
   <div class="container flex justify-between items-start p-2">
     <div class="b-left text-xs font-semibold">
       <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
@@ -15,14 +15,19 @@
     <div class="b-time text-xs font-semibold">
       <%= post.updated_at.to_formatted_s(:short) %>
     </div>
+
     <div class="b-actions flex text-blue-700">
-      <div class="mr-2 cursor-pointer">like</div>
-      <div>
-        <%= link_to "comments", post_path(post), class: "cursor-pointer", data: { turbo_frame: "post_#{post.id}_comments" } %>
+      
+      <div class="mr-2">like</div>
+      <div class="flex gap-2 items-center">
+        <%= link_to "comments", '#', data: {action: "click->comments#toggle"} %>
+        <div data-controller="comments"><%= count_post_comments(post) %></div>
       </div>
+
     </div>
   </div>
 
-  <%= turbo_frame_tag "post_#{post.id}_comments" do %>
-  <% end -%>
+  <div class="hidden pt-4 pb-4 pl-2 pr-4" id="post_<%= post.id %>_comments" data-comments-target="post_comments">
+    <%= render "posts/comments/post_comments", post: post %>
+  </div>  
 </div>

@@ -1,11 +1,18 @@
 class CommentsController < ApplicationController
 	before_action :set_comment
+	before_action :set_current_user_email
 
 	def show
 
 	end
 
 	def edit
+	  @comment = Comment.find(params[:id])
+
+	  respond_to do |format|
+	    format.turbo_stream { render partial: "comments/form", locals: { comment: @comment } }
+	    format.html 
+	  end
 	end
 
 	def update
@@ -32,5 +39,9 @@ class CommentsController < ApplicationController
 
 		def comment_params
 			params.expect(comment: [:body])
+		end
+
+		def set_current_user_email
+			 cookies[:current_user_email] = current_user.email if user_signed_in?
 		end
 end

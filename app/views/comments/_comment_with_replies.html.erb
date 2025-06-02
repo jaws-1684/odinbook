@@ -1,11 +1,17 @@
 <%= turbo_stream_from comment, :comments %>
-<div class="pl-3 border-1 bg-gray-400" id="<%= dom_id(comment)%>_with_comments" data-controller="comment-reply">
+<div class="pl-3 text-sm" id="<%= dom_id(comment)%>_with_comments" data-controller="comment-reply">
     <%= render comment %>
 
-    <div class="text-xs">
-        <%= link_to "Reply", '#', data: {action: "click->comment-reply#toggle"} %>
+    <div class="text-xs flex gap-2 mt-1">
+        <p class="text-gray-500"><%= time_ago_in_words(comment.created_at) %> ago</p>
+        <%= link_to "Reply", '#', data: {action: "click->comment-reply#toggle"}, class: "text-blue-700" %>
+       <% if cookies[:current_user_email] == comment.user.email %>
+           <%= link_to "Edit", edit_comment_path(comment), data: { turbo_frame: dom_id(comment) } %>
+            <%= link_to "Delete", comment_path(comment), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %> 
+        <% end -%>      
     </div>
 
+    <hr class='text-gray-200 mb-1 mt-1' />
     <div id="<%= dom_id(comment) %>_comments">
         <%= render partial: "comments/form", 
             locals: {
@@ -15,7 +21,7 @@
                 class: "hidden"
             } %>
              <%= render partial: "comments/comment_with_replies", 
-            collection: comment.comments, as: :comment %>
+            collection: comment.comments, as: :comment%>
     </div>
 
 

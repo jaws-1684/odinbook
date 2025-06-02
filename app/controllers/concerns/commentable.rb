@@ -3,6 +3,7 @@ module Commentable
 	include ActionView::RecordIdentifier
 	include RecordHelper
 
+
 	def create
 		@comment = @commentable.comments.new(comment_params)
 		@comment.user = current_user
@@ -38,4 +39,6 @@ module Commentable
 	def comment_params
 		params.expect(comment: [:body])
 	end
+
+	
 end
