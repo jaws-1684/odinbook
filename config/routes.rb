@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+resources :profiles, path: "/profile/" do
+  resources :friend_requests, as: :friend, path: "/friends/"
+end
+
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',
@@ -6,14 +11,18 @@ Rails.application.routes.draw do
     
   resources :posts, path: "/feed/" do
      resources :comments, module: :posts
+
+     member do
+       post "like", to: "posts#like"
+       delete "unlike", to: "posts#unlike"
+     end
    end
 
   resources :comments do
     resources :comments, module: :comments
   end
 
-  resources :comments
-  
+
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,0 +1,49 @@
+<%= form_with model: @post do |f| %>
+		<div class="b-new-post flex flex-col h-auto w-full p-2">
+			<% if @post.errors.any? %>
+				<div class="b-errors flex flex-col p-3 mb-4 w-full text-xs text-red-800 rounded-lg bg-red-50 border border-red-200" role="alert">
+					<div id="error_explanation">
+						<h2 class="text-sm font-semibold text-red-800 mb-2">
+							<%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:
+						</h2>
+						<ul class="list-disc list-inside space-y-1">
+							<% @post.errors.each do |error| %>
+								<li class="text-xs"><%= error.full_message %></li>
+							<% end %>
+						</ul>
+					</div>
+				</div>
+			<% end %>
+
+
+
+			<div class="b-img-url mb-2 flex gap-4 items-center">
+				<div class="upload flex items-center gap-2">
+					<%= f.label :image_url, "Image", class: "font-bold text-sm" %>
+				<%= f.file_field :image_url, class: "text-xs w-full" %>
+				</div>
+				
+
+				<div class="link-url flex items-center">
+					<%= f.label :image_url, "Or link", class: "font-bold text-xs" %>
+					<%= f.text_field :image_url, class: "w-full border border-gray-400/50 bg-gray-100 p-1 rounded-sm text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+				</div>
+			</div>
+		
+			<div class="b-title mb-2 flex gap-2">
+				<%= f.label :title, "Title", class: "block font-bold text-sm mb-1 pr-1 " %>
+				<%= f.text_field :title, placeholder: "Enter your title here", 
+						class: "w-[425px] border border-gray-400/50 bg-gray-100 p-1 rounded-sm text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+			</div>
+
+			<div class="b-body mb-2 flex gap-2">
+				<%= f.label :body, "Body", class: "block font-bold text-sm mb-1" %>
+				<%= f.text_area :body, placeholder: "Write your post content here...", 
+						class: "w-[425px] border border-gray-400/50 bg-gray-100 p-1 rounded-sm text-xs h-[200px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+			</div>
+
+			<div class="actions flex justify-end mr-2">
+				<%= f.submit "Create", class: "font-semibold text-blue-700 cursor-pointer border border-gray-400/50 bg-white px-4 py-2 rounded-sm text-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+			</div>
+		</div>    
+	<% end -%>

@@ -1,0 +1,44 @@
+<nav class="b-header w-dvw bg-white text-gray-400 shadow-md z-10 basis fixed">
+
+  <div class="flex justify-center items-start">
+       <div class="nav-bar flex justify-between items-center w-6xl">
+           <div class="site-logo text-2xl font-bold text-blue-500 italic">
+            <%= link_to "Odinbook", posts_path %>
+            </div>
+
+          <div class="b-profile-info text-black text-sm text-center flex justify-center items-center">
+            
+                <div class="flex flex-col justify-start items-start">
+                  <p class="text-xs italic text-blue-900">logged in as</p>
+                  <p class="font-semibold mr-1 text-sm"><%= current_user.email %> </p>
+                </div>
+
+                <div class="b-img inline">
+                  <%= image_tag current_user.avatar_url, class: "inline mr-2 [clip-path:circle(40%)] w-[50px] h-[50px] border-1 border-gray-400/50 "%>
+                </div>
+               
+               <div class="sign-out hover:bg-gray-200/50 text-xs rounded-xs">
+                 
+
+                   <%= button_to destroy_user_session_path, :method => :delete do %>
+                                      <div class="container-out flex justify-around items-center cursor-pointer p-2">
+                                          <div class="container-ico mr-1">
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                                                  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                                              </svg>
+                                          </div>
+
+                                          <p>Sign out</p>
+                                      </div>
+                                      
+                                      
+                                      
+                    <% end -%>
+               </div>
+          </div>
+     
+       </div>
+   
+  </div>
+</nav>

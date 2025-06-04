@@ -1,0 +1,5 @@
+class AddFriendIdColumnToFriendRequests < ActiveRecord::Migration[8.0]
+  def change
+    add_column :friend_requests, :friend_id, :integer
+  end
+end

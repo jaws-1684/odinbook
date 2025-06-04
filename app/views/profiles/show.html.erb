@@ -1,0 +1,96 @@
+<% content_for :title do %><%= @profile.full_name %><% end %>
+<div class="main h-auto w-6xl grid grid-cols-12 grid-rows-12 mt-16 mb-2">
+  <div class="sidebar col-start-1 col-span-2 row-start-1 row-span-full items-start h-auto">
+       <ul>
+      <%= link_to "profile", profile_path(current_user) %>
+       <li>implement messages</li>
+     </ul>
+  </div>
+
+  <div class="b-center-content col-start-3 col-span-full row-start-1 row-span-full border-gray-400/50 text-sm">
+                    
+        <div class="profile-info h-86 flex flex-col justify-end bg-[url(https://picsum.photos/1000/300)] rounded-xl">
+            <div class="info h-sm w-full h-24 border-1 border-gray-400/50 bg-white rounded-xl text-sm">
+                             <div class="b-profile-image relative bottom-20 left-5 z-1 flex">
+                                  <%= image_tag @profile.avatar_url, class: "mr-2 rounded-full w-[150px] border-2 border-white"%>
+                                 <div class="self-end mb-2">
+                                     <p class="text-2xl font-semibold"> <%= @profile.full_name %></p>
+                                     <p class="text-md"> <%= @profile.email %></p>
+                                   </div>
+                             </div>
+
+
+                             
+            </div>
+
+        </div>
+
+        
+
+        <div class="posts-ascii-container gap-2 flex mt-4">
+
+                <div class="media-posts-container w-3xl flex flex-col mb-2 gap-2">
+                  <div class="images-container w-full h-56 border-1 border-gray-400/50 rounded-xl bg-white flex flex-col justify-start items-start p-4">
+                     <div class="images w-full flex gap-2 justify-between items-center">
+                      <%= image_tag "https://picsum.photos/300", class:"w-[150px] rounded-sm" %>
+                      <%= image_tag "https://picsum.photos/300", class:"w-[150px] rounded-sm" %>
+                      <%= image_tag "https://picsum.photos/300", class:"w-[150px] rounded-sm" %>
+                     </div>
+
+                     <div class="actions w-full h-[30px] flex gap-2 text-blue-500 text-xs mt-2 font-semibold justify-center">
+                      <button class="flex items-center justify-center p-2 bg-[#F2F2F2] hover:bg-gray-200 cursor-pointer rounded-md grow text-center">
+                        Implement Upload a photo
+                      </button>
+                      <a href="#" class="flex items-center justify-center p-2 bg-[#F2F2F2] hover:bg-gray-200 rounded-md grow text-center">
+                        Implement Show all
+                      </a>
+                    </div>
+
+
+                  </div>
+
+                      <div class="b-create w-full h-sm border-1 border-gray-400/50 bg-white rounded-xl text-sm p-2">
+
+                              <%= turbo_frame_tag "new_post" do %>
+                               <div><%= link_to new_post_path, class: "text-blue-500 font-semibold hover:text-blue-400" do %>
+                                   <div class="create-post w-md flex justify-center items-center cursor-pointer">
+                                    <div class="ico">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25" fill="#2c80ff" class="bi bi-plus font-bold" viewBox="0 0 16 16">
+                                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                      </svg>
+                                    </div>
+                                    <p>New Post</p>
+                                  </div>
+                                  <% end -%>
+                                </div>
+                              <% end %>
+
+                    </div>
+
+
+
+                    <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm mt-2">
+
+                              <div id="posts-container">
+                                 <%= render @posts %>
+                              </div>
+
+                    </div>
+               </div>
+
+                <div class="b-right w-2xl h-auto flex flex-col">
+                <div class="friends text-md w-full h-96 border-1 border-gray-400/50 bg-white rounded-xl ">
+                
+
+                </div>
+            </div>
+          </div>
+          
+        </div>
+                   
+  </div>
+
+  
+</div>
+
+       

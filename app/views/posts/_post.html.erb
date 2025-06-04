@@ -1,33 +1,45 @@
-<div class="post mb-2" data-controller="comments">
-  <div class="container flex justify-between items-start p-2">
-    <div class="b-left text-xs font-semibold">
-      <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
-      <span><%= post.user.full_name %></span>
+<%= turbo_frame_tag "post_#{dom_id(post)}" do %>
+  <div class="post mb-2" data-controller="comments">
+    <div class="container flex justify-between items-start p-2">
+      <div class="b-left text-xs font-semibold">
+        <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
+        <span><%= post.user.full_name %></span>
+      </div>
+      <p class="mt-2">some options</p>
     </div>
-    <p class="mt-2">some options</p>
-  </div>
- 
-  <h2 class="font-semibold text-md pl-2 pb-2"><%= post.title %></h2>
-  <img src="<%= post.image_url %>" alt="" class="w-full">
-  <p class="p-2 break-all"><%= post.body %></p>
-  
-  <div class="b-bottom flex justify-between items-center pl-2 pr-2 pb-2">
-    <div class="b-time text-xs font-semibold">
-      <%= post.updated_at.to_formatted_s(:short) %>
-    </div>
-
-    <div class="b-actions flex text-blue-700">
-      
-      <div class="mr-2">like</div>
-      <div class="flex gap-2 items-center">
-        <%= link_to "comments", '#', data: {action: "click->comments#toggle"} %>
-        <div data-controller="comments"><%= count_post_comments(post) %></div>
+   
+    <h2 class="font-semibold text-md pl-2 pb-2"><%= post.title %></h2>
+    <img src="<%= post.image_url %>" alt="" class="w-full">
+    <p class="p-2 break-all"><%= post.body %></p>
+    
+    <div class="b-bottom flex justify-between items-center pl-2 pr-2 pb-2">
+      <div class="b-time text-xs font-semibold">
+        <%= post.updated_at.to_formatted_s(:short) %>
       </div>
 
-    </div>
-  </div>
+      <div class="b-actions flex text-blue-700">
+        
+        <div class="mr-2 flex gap-1">
+          <%= post.likes.size %> 
+       
+          <% if user_signed_in? %>
+            <% if current_user && post.likes.exists?(user_id: current_user.id) %>
+              <%= button_to "unlike", unlike_post_path(post),method: :delete %>
+            <% else %>
+              <%= button_to "like", like_post_path(post), method: :post%>
+            <% end -%>
+          <% end -%>
+        </div>
+        <div class="flex gap-2 items-center">
+          <%= link_to "comments", '#', data: {action: "click->comments#toggle"} %>
+          <div><%= count_post_comments(post) %></div>
+        </div>
 
-  <div class="hidden pt-4 pb-4 pl-2 pr-4" id="post_<%= post.id %>_comments" data-comments-target="post_comments">
-    <%= render "posts/comments/post_comments", post: post %>
-  </div>  
-</div>
+      </div>
+    </div>
+
+    <div class="hidden pt-4 pb-4 pl-2 pr-4" id="post_<%= post.id %>_comments" data-comments-target="post_comments">
+      <%= render "posts/comments/post_comments", post: post %>
+    </div>  
+  </div>
+<% end -%>
