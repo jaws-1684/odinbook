@@ -22,3 +22,4 @@ class Comment < ApplicationRecord
     broadcast_action_to self, action: :remove, target: "#{dom_id(self)}_with_comments" 
   end
 end
+

@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
 resources :profiles, path: "/profile/" do
-  resources :friend_requests, as: :friend, path: "/friends/"
+  resources :friend_requests, path: "/friends/", module: :profiles
 end
+resources :friend_requests, only: [:create, :update, :destroy]
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',

@@ -2,5 +2,5 @@
 
   <%= turbo_stream_from post, :comments %>
   <%= tag.div id: "#{dom_id(post)}_comments" do %>
-   <%= render partial: "comments/comment_with_replies", collection: post.comments.where(parent_id: nil).order(created_at: :desc), as: :comment %>
+   <%= render partial: "comments/comment_with_replies", collection: post.comments.includes(:user).where(parent_id: nil).order(created_at: :desc), as: :comment %>
   <% end -%>

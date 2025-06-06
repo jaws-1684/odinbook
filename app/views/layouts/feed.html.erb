@@ -23,12 +23,25 @@
   </head>
 
   <body>
-    
-     <%= render partial: "shared/nav" if user_signed_in? %>
 
     <main>
-      <div class="login-container flex flex-col w-dvw justify-start items-center min-h-screen bg-gray-200">
-        <%= yield %>
+      <%= render partial: "shared/nav" if user_signed_in? %>
+
+      <div class="b-page-container flex flex-col w-dvw justify-start items-center min-h-screen bg-gray-200">
+        <div class="b-wrapper flex gap-2">
+           <div class="b-left-sidebar w-sm mt-4">
+              <%= render partial: "shared/left-sidebar" %>
+           </div>
+
+           <div class="b-main-content flex w-6xl">
+               <%= yield :main %>
+           </div> 
+
+           <div class="b-right-sidebar">
+              <%= render partial: "shared/right-sidebar" %>
+           </div>
+        </div>  
+
       </div>
     </main>
 

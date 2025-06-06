@@ -4,11 +4,10 @@ class User < ApplicationRecord
   devise :omniauthable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, omniauth_providers: %i[google_oauth2 github]
   has_many :posts, dependent: :destroy
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
   has_many :friend_requests, dependent: :destroy
- 
   
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -25,9 +24,19 @@ class User < ApplicationRecord
   end
 
   def friends
-    sent = FriendRequest.where(user_id: self.id, status: 0).includes(:friend).map(&:friend)
-    received = FriendRequest.where(friend_id: self.id, status: 0).includes(:user).map(&:user)
+    sent = FriendRequest.where(user_id: self.id, status: 1).includes(:friend).map(&:friend)
+    received = FriendRequest.where(friend_id: self.id, status: 1).includes(:user).map(&:user)
     (sent + received).uniq
+  end
+
+  def received_invitations
+    received = FriendRequest.where(friend_id: self.id, status: 0).includes(:user).map(&:user)
+    received.uniq
+  end
+
+  def sent_invitations
+    sent = FriendRequest.where(user_id: self.id, status: 0).includes(:friend).map(&:friend)
+    sent.uniq
   end
 
 end

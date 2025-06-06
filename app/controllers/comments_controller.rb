@@ -3,7 +3,6 @@ class CommentsController < ApplicationController
 	before_action :set_current_user_email
 
 	def show
-
 	end
 
 	def edit

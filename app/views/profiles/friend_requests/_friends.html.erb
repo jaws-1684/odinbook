@@ -1,0 +1,37 @@
+<% friends.each do |friend| %>
+		  <% request = find_friends(friend, current_user) %>
+
+		  <div class="b-all-friends flex justify-between gap-2 items-center">
+
+				<% if request %>
+		      <div class="order-3 text-base text-red-500">
+		        <%= button_to "unfriend", friend_request_path(request), method: :delete, class: "cursor-pointer" %>
+		      </div>
+		    <% end -%>
+			  
+
+			  <div class="w-1/7">
+		     	 <%= image_tag friend.avatar_url , class: "rounded-full" %>	      
+		    </div>
+
+				<div class="profile-info grow-1 flex flex-col">			
+			     <div class="text-base">
+			     	<p><%= friend.full_name %></p>
+			     </div>
+
+			     	<div class="text-blue-500 text-xs">
+							implement send a message
+						</div>
+				</div>
+
+				<div class="text-base">
+							<%= link_to "view profile", profile_path(friend) %>
+				</div>
+
+		 </div>
+
+		
+	    
+		
+<% end -%>
+

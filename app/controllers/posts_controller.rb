@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
+	layout "feed"
 	before_action :set_post, only: [:show, :edit, :update, :destroy, :like, :unlike]
+	
 	def index
-		@posts = Post.all
+		@posts = Post.subscribed_to(current_user)
 	end
 
 	def show
@@ -14,13 +16,16 @@ class PostsController < ApplicationController
 	def create
     @post = current_user.posts.build(post_params)
     
-    respond_to do |format|
-      if @post.save
+    if @post.save
+    	respond_to do |format| 
         format.turbo_stream
         format.html { redirect_to posts_path, notice: 'Post created successfully!' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
       end
+    else  	
+      respond_to do |format|
+	    format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { post: @post }) }
+	    format.html { render :new, status: :unprocessable_entity }
+  		end
     end
   end
 
@@ -28,9 +33,7 @@ class PostsController < ApplicationController
 	end
 
 	def update
-		@post = Post.find(params[:id])
-
-		if @post.update
+		if @post.update(post_params)
 			redirect_to posts_path, status: :see_other, notice: "Post was successfully updated!"
 		else
 			flash.now[:errors] = "There was an error updating your post."
@@ -39,7 +42,6 @@ class PostsController < ApplicationController
 	end
 
 	def destroy
-		@post = Post.find(params[:id])
 		@post.destroy
 		flash[:success] = "Post was successfully deleted!"
 

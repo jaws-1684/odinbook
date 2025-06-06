@@ -1,11 +1,18 @@
-<%= turbo_frame_tag "post_#{dom_id(post)}" do %>
+<%= turbo_frame_tag dom_id(post) do %>
   <div class="post mb-2" data-controller="comments">
     <div class="container flex justify-between items-start p-2">
       <div class="b-left text-xs font-semibold">
-        <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
-        <span><%= post.user.full_name %></span>
+        <%= link_to profile_path(post.user), data: { turbo_frame: "_top" } do %>
+          <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
+          <span><%= post.user.full_name %></span>
+        <% end -%>
       </div>
-      <p class="mt-2">some options</p>
+      <% if cookies[:current_user_id] == post.user.id %>
+        <div class="b-actions flex gap-2  mt-2">
+            <%= link_to "edit", edit_post_path(post.id), class: "text-blue-600 hover:text-blue-800" %>
+            <%= button_to "delete", post_path(post), method: :delete, class: "text-blue-600 cursor-pointer hover:text-blue-800" %>
+        </div>
+      <% end -%>
     </div>
    
     <h2 class="font-semibold text-md pl-2 pb-2"><%= post.title %></h2>
@@ -17,18 +24,18 @@
         <%= post.updated_at.to_formatted_s(:short) %>
       </div>
 
-      <div class="b-actions flex text-blue-700">
+      <div class="b-likes flex text-blue-700">
         
         <div class="mr-2 flex gap-1">
           <%= post.likes.size %> 
        
-          <% if user_signed_in? %>
-            <% if current_user && post.likes.exists?(user_id: current_user.id) %>
+          
+            <% if post.likes.exists?(user_id: cookies[:current_user_id]) %>
               <%= button_to "unlike", unlike_post_path(post),method: :delete %>
             <% else %>
               <%= button_to "like", like_post_path(post), method: :post%>
             <% end -%>
-          <% end -%>
+          
         </div>
         <div class="flex gap-2 items-center">
           <%= link_to "comments", '#', data: {action: "click->comments#toggle"} %>

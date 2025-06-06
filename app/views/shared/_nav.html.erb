@@ -2,11 +2,25 @@
 
   <div class="flex justify-center items-start">
        <div class="nav-bar flex justify-between items-center w-6xl">
-           <div class="site-logo text-2xl font-bold text-blue-500 italic">
-            <%= link_to "Odinbook", posts_path %>
-            </div>
 
-          <div class="b-profile-info text-black text-sm text-center flex justify-center items-center">
+            <div class="b-search-logo w-full flex items-center justify-between gap-2">
+            
+            <div class="b-start flex items-center gap-2 ">
+                <div class="site-logo text-2xl font-bold text-blue-500 italic">
+                <%= link_to "Odinbook", posts_path %>
+              </div>
+
+              <div class="ml-29 search-input rounded-md p-2 bg-[#F2F2F2] rounded-xl text-xs border-1 border-gray-400/50 w-[250px] cursor-pointer hover:border-blue-500 focus:ring-2 focus:ring-blue-500">
+                  implement search
+                </div>
+                <div class="">
+                  <p>search&nbspbtn</p>
+                </div>
+              </div>
+            </div>  
+           
+
+          <div class="b-profile-info grow-1 shrink-0 text-black text-sm text-center flex justify-center items-center">
             
                 <div class="flex flex-col justify-start items-start">
                   <p class="text-xs italic text-blue-900">logged in as</p>
