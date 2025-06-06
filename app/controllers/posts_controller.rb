@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-	layout "feed"
 	before_action :set_post, only: [:show, :edit, :update, :destroy, :like, :unlike]
 	
 	def index
@@ -19,12 +18,10 @@ class PostsController < ApplicationController
     if @post.save
     	respond_to do |format| 
         format.turbo_stream
-        format.html { redirect_to posts_path, notice: 'Post created successfully!' }
       end
     else  	
       respond_to do |format|
-	    format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { post: @post }) }
-	    format.html { render :new, status: :unprocessable_entity }
+	    format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "Post something cool", post: @post }) }
   		end
     end
   end

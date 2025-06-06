@@ -1,43 +1,80 @@
-<%= form_with model: @post do |f| %>
-		<div class="b-post flex flex-col min-h-12 w-full p-4 gap-2 justify-evenly items-start">
-			<% if @post.errors.any? %>
+<div data-controller="modal" id="postModal" class="modal inset-0 z-50 absolute top-12 w-full h-dvh backdrop-blur-sm flex justify-center items-start overflow-y-hidden">
+	<div class="modal-content p-2 bg-white border border-gray-400/50 rounded-xl w-[550px] min-h-[590px] mt-12 flex flex-col">
 
-				<div class="b-errors flex flex-col p-3 mb-4 w-full text-xs text-red-800 rounded-lg bg-red-50 border border-red-200" role="alert">
-					<div id="error_explanation">
-						<h2 class="text-sm font-semibold text-red-800 mb-2">
-							<%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:
-						</h2>
-						<ul class="list-disc list-inside space-y-1">
-							<% @post.errors.each do |error| %>
-								<li class="text-xs"><%= error.full_message %></li>
-							<% end %>
-						</ul>
-					</div>
-				</div>
+			<div class="close text-blue-700 self-end rounded-xl bg-gray-200 p-1">
+				<%= link_to '#', data: {action: "click->modal#hideModal"}, class: "text-gray-400 hover:text-gray-600" do %>
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+				</svg>
 			<% end %>
-
-
-				<div class="b-img-url upload flex gap-2 justify-start items-center">
-					<%= f.label :image_url, "Picture", class: "font-bold text-sm" %>
-					<%= f.file_field :image_url, class: "text-xs w-40 cursor-pointer p-1 bg-gray-200 border border-gray-400/50 hover:bg-gray-100 rounded-sm focus:ring-2 focus:ring-blue-500" %>
-				</div>
-
-
-		
-			<div class="b-title flex gap-2 w-full">
-				<%= f.label :title, "Title", class: "block font-bold text-sm mb-1 pr-1 " %>
-				<%= f.text_field :title, placeholder: "Enter your title here", 
-						class: "border border-gray-400/50 bg-gray-100 p-1 grow-1 rounded-sm text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
 			</div>
 
-			<div class="b-body flex gap-2 w-full">
-				<%= f.label :body, "Body", class: "block font-bold text-sm mb-1" %>
-				<%= f.text_area :body, placeholder: "Write your post content here...", 
-						class: "border border-gray-400/50 bg-gray-100 p-1 grow-1 rounded-sm text-xs h-[200px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+			<div class="b-title self-center">
+				<h2 class="text-base font-bold text-gray-600"><%= title %></h2>
 			</div>
 
-			<div class="actions self-end">
-				<%= f.submit "save", class: "font-semibold text-blue-700 cursor-pointer border border-gray-400/50 bg-white px-4 py-2 rounded-sm text-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-			</div>
-		</div>    
-	<% end -%>
+			<%= form_with model: post do |f| %>
+						<div class="p-4">
+						
+							<% if post.errors.any? %>
+								<div class="mb-4 p-3 text-red-800 bg-red-50 border border-red-200 rounded-lg" role="alert">
+									<h3 class="text-sm font-medium mb-2">
+										<%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:
+									</h3>
+									<ul class="list-disc list-inside space-y-1 text-xs">
+										<% post.errors.each do |error| %>
+											<li><%= error.full_message %></li>
+										<% end %>
+									</ul>
+								</div>
+							<% end %>
+
+							<!-- Upload Area -->
+							<div class="mb-6">
+								<div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+									<div class="flex flex-col items-center">
+										<!-- Upload Icon -->
+										<div class="size-14 flex items-center justify-center mb-4 p-2">
+											
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="size-10 text-gray-400 bi bi-cloud-upload-fill" viewBox="0 0 16 16">
+											  <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0m-.5 14.5V11h1v3.5a.5.5 0 0 1-1 0"/>
+											</svg>
+										</div>
+										
+										<h3 class="text-lg font-medium text-gray-900 mb-4">Add photo or video</h3>
+										
+										<!-- Upload Button -->
+										<div class="mb-3">
+											<%= f.label :image_url, "Upload from device", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+											<%= f.file_field :image_url, id: "post_image_url", class: "hidden" %>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+
+							<!-- Text Input -->
+							<div class="mb-4 text-sm">
+								<%= f.text_area :body, 
+									placeholder: "Write something here...", 
+									class: "w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+									rows: 4 %>
+							</div>
+
+							<!-- Title Input -->
+							<div class="mb-4 text-sm">
+								<%= f.text_field :title, 
+									placeholder: "Title", 
+									class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+							</div>
+						</div>
+
+						<!-- Footer -->
+						<div class="flex justify-end items-center p-4 border-t border-gray-200">
+							
+							<%= f.submit "Save", 
+								class: "px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+						</div>
+					<% end %>
+	</div>
+</div>    				

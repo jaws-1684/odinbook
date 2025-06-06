@@ -7,7 +7,7 @@
           <span><%= post.user.full_name %></span>
         <% end -%>
       </div>
-      <% if cookies[:current_user_id] == post.user.id %>
+      <% if created_by_current_user? (post) %>
         <div class="b-actions flex gap-2  mt-2">
             <%= link_to "edit", edit_post_path(post.id), class: "text-blue-600 hover:text-blue-800" %>
             <%= button_to "delete", post_path(post), method: :delete, class: "text-blue-600 cursor-pointer hover:text-blue-800" %>
@@ -29,13 +29,13 @@
         <div class="mr-2 flex gap-1">
           <%= post.likes.size %> 
        
-          
-            <% if post.likes.exists?(user_id: cookies[:current_user_id]) %>
+          <% unless current_user_id %>
+            <% if post.likes.exists?(user_id: current_user_id) %>
               <%= button_to "unlike", unlike_post_path(post),method: :delete %>
             <% else %>
               <%= button_to "like", like_post_path(post), method: :post%>
             <% end -%>
-          
+          <% end -%>
         </div>
         <div class="flex gap-2 items-center">
           <%= link_to "comments", '#', data: {action: "click->comments#toggle"} %>

@@ -27,23 +27,30 @@
     <main>
       <%= render partial: "shared/nav" if user_signed_in? %>
 
-      <div class="b-page-container flex flex-col w-dvw justify-start items-center min-h-screen bg-gray-200">
-        <div class="b-wrapper flex gap-2">
-           <div class="b-left-sidebar w-sm mt-4">
+      <div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200">
+
+        <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
+
+           <div class="b-left-sidebar max-w-xs p-2">
               <%= render partial: "shared/left-sidebar" %>
            </div>
 
-           <div class="b-main-content flex w-6xl">
+           <div class="b-main-content w-[550px] h-auto flex flex-col gap-2 p-2 mb-2">
                <%= yield :main %>
            </div> 
 
-           <div class="b-right-sidebar">
+           <div class="b-right-sidebar max-w-xs p-2">
               <%= render partial: "shared/right-sidebar" %>
            </div>
+
         </div>  
-
       </div>
-    </main>
 
+      <div id="post-modal" class="new-post-container">
+        <%= yield :modal%>
+      </div>
+
+    </main> 
   </body>
+
 </html>
