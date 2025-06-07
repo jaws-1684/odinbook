@@ -1,0 +1,30 @@
+ <div class="b-friend-requests w-auto h-96 border-1 border-gray-400/50 bg-white rounded-xl text-sm p-4">
+					          	
+  	<% if current_user.received_invitations.any? %>
+          <% current_user.received_invitations.each do |invitator| %>
+          <% request = find_invitations(invitator, current_user) %>
+        <h2 class="text-2xl text-gray-600 font-semibold mb-2">Friend requests&nbsp<span>(<%= current_user.received_invitations.size %>)</span></h2>
+        <div class="container flex gap-2 w-sm items-center justify-between">
+
+        	<%= link_to profile_path(invitator), class: "flex items-center" do %>
+	        	<%= image_tag invitator.avatar_url, class: "w-[60px]" %><span class="inline-block"><%= invitator.full_name %><span/>
+					<% end -%>
+
+					<div class="btns flex gap-2">
+							<%= button_to "accept", friend_request_path(request), method: :patch, class: "p-2 bg-green-200 cursor-pointer hover:bg-green-300 rounded-sm" %>
+							<%= button_to "decline", friend_request_path(request), method: :delete, redirect_to: profile_path(current_user), class: "p-2 bg-red-400 cursor-pointer hover:bg-red-300 rounded-sm" %>
+					</div>
+						
+				</div>
+			 <hr class='text-gray-200 mb-1 mt-1' />
+          <% end -%>
+    <% else %>
+      <div class="h-full flex flex-col justify-center items-center text-gray-500 px-4 py-12">
+			  <div class="text-center">
+			    <p class="text-3xl font-semibold mb-2">No Invitations</p>
+			    <p class="text-base text-gray-400">You currently don’t have any pending invites.</p>
+			  </div>
+			</div>
+
+    <% end -%>         
+</div>

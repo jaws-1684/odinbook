@@ -1,0 +1,42 @@
+<div class="friends h-70 w-sm border-1 border-gray-400/50 bg-white rounded-xl p-4">
+
+    <% unless @profile.friends.any? %>
+         <div class="h-full flex flex-col justify-center items-center text-gray-500 px-4 py-12">
+              <div class="text-center">
+                <p class="text-3xl font-semibold mb-2">No friends</p>
+                <p class="text-base text-gray-400">User currently don’t have any friends</p>
+              </div>
+         </div>
+
+    <% else %>
+         <%= link_to profile_friend_requests_path(@profile) do %>
+          <p class="text-base font-semibold mb-2 ml-4">Friends&nbsp<span class="text-sm text-gray-500">(<%= @profile.friends.size %>)</span></p>
+         <% end -%>
+
+
+          <div class="flex gap-2 flex-wrap">
+             <% @profile.friends.slice(0, 8).each do |friend| %>
+            
+                <%= link_to profile_path(friend) do %>
+                    <div class="flex flex-col justify-center items-center gap-1 cursor-pointer hover:bg-gray-200 hover:rounded-sm p-1">
+                         <div>
+                           <%= image_tag friend.avatar_url , class: "w-[70px] rounded-full" %>        
+                         </div>
+
+                         <div>
+                          <p class="text-xs"><%= friend.full_name.split[0] %></p>
+                         </div>
+                    </div>
+                <% end -%>    
+          <% end -%>
+          </div>
+    <% end -%>
+</div>
+
+
+
+ 
+     
+
+           
+     

@@ -9,7 +9,7 @@
     <%= csp_meta_tag %>
 
     <%= yield :head %>
-
+   
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
@@ -27,31 +27,35 @@
     <main>
       <%= render partial: "shared/nav" if user_signed_in? %>
 
-      <div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200">
+        <div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200">
 
-        <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
+            <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
 
-           <div class="b-left-sidebar max-w-xs p-2">
-              <%= render partial: "shared/left-sidebar" %>
-           </div>
+               <div class="b-left-sidebar max-w-xs p-2 shrink-0">
+                  <%= render partial: "shared/left-sidebar" %>
+               </div>
 
-           <div class="b-main-content w-[550px] h-auto flex flex-col gap-2 p-2 mb-2">
-               <%= yield :main %>
-           </div> 
+               <div class="b-wrapper grow-1 h-auto flex flex-col gap-2 p-2">
+                   
+                    <%= yield :profile %>
 
-           <div class="b-right-sidebar grow-1 text-end p-2">
-              <%= render partial: "shared/right-sidebar" %>
-           </div>
+                    <div class="container flex justify-between gap-2">
+                        <%= yield :main %>
+                        <%= yield :friends %>
+                        <%= yield :invitations %>
+                    </div>
+                        
+               </div>
 
-        </div>  
-      </div>
+            </div>  
+        </div>
 
       <div id="post-modal" class="new-post-container">
         <%= yield :modal%>
       </div>
 
       <%= yield %>
-
+      
     </main> 
   </body>
 

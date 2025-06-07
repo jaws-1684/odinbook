@@ -17,11 +17,11 @@ class ApplicationController < ActionController::Base
       # turbo frames fix https://github.com/hotwired/turbo-rails#a-note-on-custom-layouts
       return "turbo_rails/frame" if turbo_frame_request?
 
-      if controller_name == "posts"
-          # use custom layout for devise
-          "feed"
-        else
-          "application"
+      case controller_name
+        when "posts" then "feed"
+        when "profiles" then "profile"
+        when "friend_requests" then "profile"  
+        else "application"
       end
   end
 

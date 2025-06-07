@@ -1,8 +1,7 @@
-<div class="b-new-post w-full h-sm border-1 border-gray-400/50 bg-white rounded-xl text-sm p-2">
-       
-    <div class="create-new-post-link">
-        <%= link_to new_post_path, id: "openModalBtn", class: "text-blue-500 font-semibold hover:text-blue-400", data: { turbo_frame: "new_post" } do %>
-            <div class="create-post w-md flex justify-center items-center cursor-pointer">
+<div class="b-new-post w-full min-h-10 border-gray-400/50 bg-white rounded-xl border text-sm p-2 flex justify-center items-center">
+       <div class="create-new-post-link h-full w-3xs ">
+          <%= link_to new_post_path, id: "openModalBtn", class: "text-blue-500 font-semibold hover:text-blue-400", data: { turbo_frame: "new_post" } do %>
+            <div class="create-post flex justify-center items-center cursor-pointer font-base">
 
                 <div class="ico">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25" fill="#2c80ff" class="bi bi-plus font-bold" viewBox="0 0 16 16">
@@ -12,8 +11,12 @@
 
                 <p>New Post</p>
 
-                </div>
+            </div>
         <% end -%>
-    </div>
+    
        
+       </div>
 </div>
+
+
+      
