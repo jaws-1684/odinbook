@@ -15,7 +15,7 @@
      <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm mt-2">
         <%= turbo_stream_from "posts" %>
                 <div id="posts-container">
-                   <%= render @posts %>
+                   <%= render @posts.includes(:user).order(created_at: :desc) %>
                 </div>
       </div>
 
@@ -26,3 +26,4 @@
    <%= render "profile_friends" %>
 <% end -%>
 
+<%= turbo_frame_tag "search" %>

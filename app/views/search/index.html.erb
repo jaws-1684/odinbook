@@ -1,0 +1,53 @@
+<%= turbo_frame_tag "search" do %>
+  
+<div class="h-auto w-xl bg-white fixed top-15 rounded-xl left-139 z-20 border-1 border-gray-400/50 data-controller='search'">
+    <div class="min-h-[100px] w-xl block">
+
+        <%= render "close_btn" %>
+
+          <% unless @results.any? %>
+              <div class="h-full flex flex-col justify-center items-center text-gray-500 px-4 py-12">
+                <div class="text-center">
+                  <p class="text-3xl font-semibold mb-2">No Results</p>
+                </div>
+              </div>
+          <% else %>    
+              <h2 class="text-2xl text-gray-600 font-semibold">Results</h2>
+              <% @results.each do |user|%>
+
+                <div class=" flex justify-between items-center pr-2">
+                  <% unless user == current_user %>
+                        <%= link_to profile_path(user), data: {turbo_frame: "_top"} do %>
+                            <div class="flex justify-start items-center gap-1 cursor-pointer hover:bg-gray-200 hover:rounded-sm p-1">
+                                 <div>
+                                   <%= image_tag user.avatar_url , class: "w-[70px] rounded-full" %>        
+                                 </div>
+
+                                 <div>
+                                  <p class="text-sm"><%= user.full_name %></p>
+                                 </div>
+                            </div>
+                        <% end -%>
+                    
+                        <% if current_user.friends.include? (user) %>
+                              <div class="mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold text-xs hover:bg-blue-400">Friends</div>
+                        <% elsif current_user.sent_invitations.include? (user) %>
+                              <div class="mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold text-xs h-[35px] hover:bg-blue-400">Invitation sent</div>
+                        <% elsif user&.sent_invitations&.include? (current_user) %>
+                              <div class="mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-green-600 font-semibold text-xs h-[35px] hover:bg-green-400">User sent you an invitation</div>
+                        <% else %>
+                              <%= link_to "view profile", profile_path(user), data: { turbo_frame: "_top" }, class: "mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold text-xs hover:bg-blue-400" %>
+                        <% end -%>
+                    <% end -%>           
+                </div>
+
+                <hr class='text-gray-200'>
+
+              <% end -%>
+          <% end -%>  
+        </div>
+  </div>
+</div>
+
+  
+<% end -%>

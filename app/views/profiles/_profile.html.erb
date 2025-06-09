@@ -18,6 +18,8 @@
                                   <div class="mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold text-xs hover:bg-blue-400">Friends</div>
                             <% elsif current_user.sent_invitations.include? (@profile) %>
                                   <div class="mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold text-xs h-[35px] hover:bg-blue-400">Invitation sent</div>
+                            <% elsif @profile&.sent_invitations&.include? (current_user) %>
+                                  <div class="mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-green-500 font-semibold text-xs hover:bg-green-400">User sent you an invitation</div>
                             <% else %>    
                             <%= button_to "Add friend", profile_friend_requests_path(@profile), method: :post, class: "mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold cursor-pointer text-xs hover:bg-blue-400" %>
                             <% end -%>
@@ -32,3 +34,4 @@
             </div>
         </div>
     </div>
+    

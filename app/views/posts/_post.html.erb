@@ -38,15 +38,15 @@
           <% end -%>
         </div>
         <div class="flex gap-2 items-center">
-          <%= link_to "comments", '#', data: {action: "click->comments#toggle"} %>
+          <%= link_to "comments", post_path(post), data: {turbo_frame: "show_#{post.id}_comments", action: "click->comments#toggle"} %>
           <div><%= count_post_comments(post) %></div>
         </div>
 
       </div>
     </div>
 
-    <div class="hidden pt-4 pb-4 pl-2 pr-4" id="post_<%= post.id %>_comments" data-comments-target="post_comments">
-      <%= render "posts/comments/post_comments", post: post %>
+    <div class="" id="post_<%= post.id %>_comments" data-comments-target="post_comments">
+     <%= turbo_frame_tag "show_#{post.id}_comments"%>
     </div>  
   </div>
 <% end -%>

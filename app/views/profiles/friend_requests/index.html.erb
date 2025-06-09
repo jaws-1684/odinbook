@@ -1,6 +1,6 @@
 <% content_for :title do %>friends<% end %>
    <%= content_for :main do %>     
-			  <div class="b-friends max-w-xl min-w-xl min-h-56 border border-gray-400/50 bg-white rounded-xl p-6 text-sm flex grow-1">
+			  <div class="b-friends min-h-56 w-[550px] border border-gray-400/50 bg-white rounded-xl p-6 text-sm flex grow-1">
 						  <div class="friends-container flex w-full flex-col">
 							  	<% unless @profile.friends.any? %>
 
@@ -27,12 +27,17 @@
 <% end -%>
 
 
-	 			 <% if @profile.id == current_user.id %>
-		 			 	<%= content_for :invitations do %>
-					       <%= render "invites" %>
-					 <% end -%>     
+ <% if @profile.id == current_user.id %>
+	 	<%= content_for :invitations do %>
+       <%= render "invites" %>
+ 		<% end -%>  
+<% else %>	    
+		<%= content_for :invitations do %>
+      		<div class="b-right-sidebar grow-1 text-end p-2">
+              <%= render partial: "shared/right-sidebar" %>
+           </div>
+ 		<% end -%>  
 
+<% end -%>
 
-     <% end -%>
-
- 
+<%= turbo_frame_tag "search" %>

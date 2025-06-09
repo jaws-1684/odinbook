@@ -1,4 +1,4 @@
- <div class="b-friend-requests w-auto h-96 border-1 border-gray-400/50 bg-white rounded-xl text-sm p-4">
+ <div class="b-friend-requests h-96 border-1 border-gray-400/50 bg-white rounded-xl text-sm p-4">
 					          	
   	<% if current_user.received_invitations.any? %>
           <% current_user.received_invitations.each do |invitator| %>
@@ -7,12 +7,12 @@
         <div class="container flex gap-2 w-sm items-center justify-between">
 
         	<%= link_to profile_path(invitator), class: "flex items-center" do %>
-	        	<%= image_tag invitator.avatar_url, class: "w-[60px]" %><span class="inline-block"><%= invitator.full_name %><span/>
+	        	<%= image_tag invitator.avatar_url, class: "w-[60px] rounded-full mr-2" %><span class="inline-block"><%= invitator.full_name %><span/>
 					<% end -%>
 
 					<div class="btns flex gap-2">
-							<%= button_to "accept", friend_request_path(request), method: :patch, class: "p-2 bg-green-200 cursor-pointer hover:bg-green-300 rounded-sm" %>
-							<%= button_to "decline", friend_request_path(request), method: :delete, redirect_to: profile_path(current_user), class: "p-2 bg-red-400 cursor-pointer hover:bg-red-300 rounded-sm" %>
+							<%= button_to "accept", friend_request_path(request), method: :patch, class: "p-2 bg-green-500 cursor-pointer hover:bg-green-400 text-white rounded-sm" %>
+							<%= button_to "decline", friend_request_path(request), method: :delete, redirect_to: profile_path(current_user), class: "p-2 bg-red-500 cursor-pointer hover:bg-red-400 text-white rounded-sm" %>
 					</div>
 						
 				</div>

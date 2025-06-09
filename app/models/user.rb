@@ -39,4 +39,20 @@ class User < ApplicationRecord
     sent.uniq
   end
 
+  def self.search query
+    q = query.split(" ")
+
+    result = []
+    q.each do |term|
+      fixed_search = where('lower(full_name) LIKE ?', "#{query}")
+      unless fixed_search.empty?
+        result << fixed_search
+        break
+      else
+        result << where("email LIKE ?", "%#{term}%").or(where("full_name LIKE ?", "%#{term}%")) 
+      end      
+    end
+    result.flatten.uniq
+  end
+
 end
