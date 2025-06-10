@@ -21,7 +21,7 @@ class PostsController < ApplicationController
       end
     else  	
       respond_to do |format|
-	    format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "Post something cool", post: @post }) }
+	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "Post something cool", post: @post }) }
   		end
     end
   end

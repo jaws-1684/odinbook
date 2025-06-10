@@ -1,59 +1,60 @@
-<nav class="b-header w-dvw bg-white text-gray-400 shadow-md z-10 basis fixed" data-controller="actions">
-
-  <div class="flex justify-center items-start grow-0">
-       <div class="nav-bar flex justify-between items-center w-6xl">
-
-            <div class="b-search-logo w-full flex items-center justify-start gap-19">
-                <!-- LOGO -->      
-                    <div class="site-logo text-2xl font-bold text-blue-500 p-2 italic">
-                      <%= link_to "Odinbook", posts_path %>
-                    </div>
-
-                  <!-- SEARCH FORM -->  
-                    <div class="search-input">
-                        <%= form_with url: "/search/", method: :get do |form| %>
-                          <%= form.text_field :query, placeholder: "search", class: "rounded-xl p-2 bg-[#F2F2F2] w-sm text-xs border border border-gray-400/50 focus:ring-2 focus:ring-blue-500" %>
-                          <%= form.submit "search", class: "cursor-pointer", data: { turbo_frame: "search" } %>
-                        <% end -%>
-                    </div>
-            </div>    
-           
-
-            <div class="b-profile-info shrink-0 text-black text-sm hover:bg-gray-200 h-12 flex justify-end items-center overflow-visible">
-                <div class="b-img inline" data-action="click->actions#toggle">
-                    <%= image_tag current_user.avatar_url, class: "inline rounded-full w-[50px] h-[50px] p-1"%>
-                  </div>
-                <div class="symbol">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                  </svg>
-                </div>  
+<nav class="b-header w-dvw bg-white h-12 text-gray-400 shadow-md z-100 fixed">
+  <div class="flex justify-center items-start h-12 w-full">
+    <div class="nav-links flex justify-between h-12 items-center w-6xl shrink-1">
+      <div class="b-search-logo w-full h-12 flex items-center justify-start gap-19">
+        <!-- LOGO -->      
+            <div class="site-logo text-2xl font-bold text-blue-500 p-2 italic">
+              <%= link_to "Odinbook", posts_path %>
             </div>
-     
-       </div>
-   
-  </div>
 
-   <div class="hidden container fixed z-100 top-[6%] md:right-[20%] sm:right-[10%] min-h-[100px] w-[200px] bg-white rounded-xl  p-2 border border border-gray-400/50" 
-        data-actions-target="dropdown">
-    
-      <div class="flex flex-col justify-start items-center gap-4">
-          <div class="close text-blue-700 self-end rounded-xl bg-gray-200 p-0.5">
-            <%= link_to '#', data: { action: "click->dropdown#hide" }, class: "text-gray-400 hover:text-gray-600" do %>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            <% end %>
-          </div>
+          <!-- SEARCH FORM -->  
+            <div class="search-input shrink-0 relative" data-controller="search">
+              <div class="search">
+                <%= form_with url: "/search/", method: :get do |form| %>
+                  <%= form.text_field :query, placeholder: "search", class: "rounded-xl p-2 bg-[#F2F2F2] w-sm text-xs border border-gray-400/50 focus:ring-2 focus:ring-blue-500" %>
+                  <%= form.submit "search", class: "cursor-pointer", data: { turbo_frame: "search" } %>
+                <% end -%>
+              </div>
+               
+              <div class="search-results">
+                <%= turbo_frame_tag "search" %>
+              </div>  
+            </div>
 
-           <div class="b-img inline" >
+           
+           
+      </div>    
+             
+
+      <div data-controller="dropdown" class="relative">
+        <button type="button" data-action="dropdown#toggle click@window->dropdown#hide"><div class="wrapper text-black text-sm hover:bg-gray-200 h-12 flex justify-end items-center">
+          <div class="b-img inline" data-action="click->actions#toggle">
+              <%= image_tag current_user.avatar_url, class: "inline rounded-full w-[50px] h-[45px] p-1"%>
+            </div>
+          <div class="symbol">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+            </svg>
+          </div>  
+        </div></button>
+
+        <div class="bg-white flex flex-col mt-35 rounded-xl p-2 " 
+          data-dropdown-target="menu"
+          class="hidden transition transform origin-top-right absolute right-0"
+          data-transition-enter-from="opacity-0 scale-95"
+          data-transition-enter-to="opacity-100 scale-100"
+          data-transition-leave-from="opacity-100 scale-100"
+          data-transition-leave-to="opacity-0 scale-95"
+        >
+          <div class="b-img inline text-center mb-2" >
             <%= image_tag current_user.avatar_url, class: "inline mr-2 rounded-full w-[60px] h-[60px] border-2 border-blue-900 p-0.5"%>
           </div>
+           <p class="font-semibold mr-1 text-sm text-gray-600 text-center"><%= current_user.email %> </p>
 
-          <p class="font-semibold mr-1 text-sm text-gray-600"><%= current_user.email %> </p>
-      </div>
-
-      <div class="sign-out hover:bg-gray-200/50 rounded-xs mt-2">
+          <a href="#" data-action="dropdown#toggle">Account settings</a>
+          <a href="#" data-action="dropdown#toggle">Support</a>
+          <a href="#" data-action="dropdown#toggle">License</a>
+          <div class="sign-out hover:bg-gray-200/50 rounded-xs mt-2">
            <%= button_to destroy_user_session_path, :method => :delete do %>
                 <div class="container-out flex justify-around items-center cursor-pointer text-sm text-gray-800 ">
                     <div class="container-ico mr-1 text-blue-600 mr-2 font-semibold">
@@ -67,10 +68,12 @@
                 </div>                                  
             <% end -%>
        </div>
+      </div>
 
-       <div class="settings hover:bg-gray-200/50 rounded-xs text-gray-800 text-sm">
-            <p>impl settings</p>
-       </div>
-    </div>   
+      </div>
+    </div>
+  </div>   
 </nav>
 
+
+       

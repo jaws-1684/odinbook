@@ -1,5 +1,3 @@
 {
-  "dependencies": {
-    "@stimulus-components/dropdown": "^3.0.0"
-  }
+  "dependencies": {}
 }
