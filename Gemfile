@@ -72,3 +72,5 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem "omniauth-github", "~> 2.0"
 
 gem "requestjs-rails", "~> 0.0.13"
+
+gem "simple_form", "~> 5.3"

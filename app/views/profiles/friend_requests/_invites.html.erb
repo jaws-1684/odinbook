@@ -7,7 +7,7 @@
         <div class="container flex gap-2 w-sm items-center justify-between">
 
         	<%= link_to profile_path(invitator), class: "flex items-center" do %>
-	        	<%= image_tag invitator.avatar_url, class: "w-[60px] rounded-full mr-2" %><span class="inline-block"><%= invitator.full_name %><span/>
+	        	<%= image_tag avatar_url(invitator), class: "w-[60px] rounded-full mr-2" %><span class="inline-block"><%= invitator.full_name %><span/>
 					<% end -%>
 
 					<div class="btns flex gap-2">

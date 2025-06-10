@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 get "/search", to: "search#index"
 
-resources :profiles, path: "/profile/" do
+resources :profiles, path: "/profile/", only: [:index, :show] do
   resources :friend_requests, path: "/friends/", module: :profiles
 end
 resources :friend_requests, only: [:create, :update, :destroy]

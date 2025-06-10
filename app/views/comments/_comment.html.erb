@@ -2,7 +2,7 @@
 
 <%= turbo_frame_tag comment do %>
 		<div class="flex justify-start items-start gap-2 text-xs">
-			<div class="image w-[35px] [clip-path:circle(40%)]"><%= image_tag comment.user.avatar_url %></div>
+			<div class="image w-[35px] [clip-path:circle(40%)]"><%= image_tag avatar_url(comment.user) %></div>
 
 			<div class="comment-content flex flex-col justify-evenly items-start gap-2">
 					<div class="font-semibold"><%= comment.user.full_name %></div>

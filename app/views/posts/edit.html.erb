@@ -1,12 +1,3 @@
 <%= turbo_frame_tag @post do %>
-<div class="flex justify-between mt-4 mr-4 items-center gap-8">
-	<div class="edit-post flex items-start text-lg ml-4 gap-2">
-		<p class="text-blue-600">Edit post: &nbsp</p><span class="font-semibold"><%= @post.id %></span>
-	</div>
-	
-	<%= link_to "cancel", posts_path, data: { turbo_frame: "post_#{@post.id}" }, class: "text-blue-600" %>
-</div>
-
-	<%= render "form" %>
-	<hr class='text-gray-200 mb-1 mt-1' />
+	<%= render partial: "form", locals: {post: @post, title: "Edit"} %>
 <% end -%>

@@ -21,7 +21,7 @@ class PostsController < ApplicationController
       end
     else  	
       respond_to do |format|
-	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "Post something cool", post: @post }) }
+	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "", post: @post }) }
   		end
     end
   end
@@ -34,7 +34,10 @@ class PostsController < ApplicationController
 			redirect_to posts_path, status: :see_other, notice: "Post was successfully updated!"
 		else
 			flash.now[:errors] = "There was an error updating your post."
-			render 'new', status: :unprocessable_entity
+
+			respond_to do |format|
+	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "", post: @post }) }
+  		end
 		end	
 	end
 

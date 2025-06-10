@@ -3,8 +3,8 @@ class Post < ApplicationRecord
   has_many :comments, as: :commentable
   has_many :likes, as: :likeable, dependent: :destroy
   
-  validates :title, presence: true, length: { minimum: 5 }
-  validates :body, presence: true, length: {minimum: 20 }
+  validates :title, presence: true, length: { minimum: 5, maximum: 280 }
+  validates :body, presence: true, length: {minimum: 20, maximum: 2000 }
 
   after_create_commit do 
     broadcast_prepend_to "posts", target: "posts-container", partial: "posts/post", locals: { post: self }

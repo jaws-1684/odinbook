@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
 
   has_many :comments, foreign_key: :parent_id, dependent: :destroy
 
-  validates :body, presence: :true
+  validates :body, presence: :true, length: {minimum: 20, maximum: 2000 }
 
   after_create_commit do 
     broadcast_append_to [commentable, :comments], target: "#{dom_id(parent || commentable)}_comments", partial: "comments/comment_with_replies"

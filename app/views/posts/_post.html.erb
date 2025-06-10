@@ -3,7 +3,7 @@
     <div class="container flex justify-between items-start p-2">
       <div class="b-left text-xs font-semibold">
         <%= link_to profile_path(post.user), data: { turbo_frame: "_top" } do %>
-          <img src="<%= post.user.avatar_url %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
+          <img src="<%= avatar_url(post.user) %>" alt="" class="inline mr-2 [clip-path:circle(40%)] w-[50px]">
           <span><%= post.user.full_name %></span>
         <% end -%>
       </div>

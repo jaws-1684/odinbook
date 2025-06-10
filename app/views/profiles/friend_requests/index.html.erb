@@ -4,17 +4,10 @@
 						  <div class="friends-container flex w-full flex-col">
 							  	<% unless @profile.friends.any? %>
 
-											  <div class="flex flex-col justify-center items-center w-full h-full text-gray-500">
-											    <p class="text-3xl font-semibold mb-2">No friends</p>
-											    <% unless @profile == current_user %>
-											    	<p class="text-base text-gray-400">User currently don’t have any friends.</p>
-											    	<% else %>
-											    		<p class="text-base text-gray-400">You currently don’t have any friends. (do you?)</p>
-											    	<% end -%>
-											  </div>
+										<%= render partial: "/profiles/no_friends", locals: {msg: msg(@profile, current_user)} %>
 
-								    <% else %>
-									   		<% if @profile == current_user %>
+								<% else %>
+									   	<% if @profile == current_user %>
 									     			<h2 class="text-2xl font-semibold text-gray-800 mb-4">All Friends <span class="text-gray-400">(<%= @profile.friends.size %>)</span></h2>
 									     	<% else %>
 									     			<h2 class="text-2xl font-semibold text-gray-800 mb-4"><%= @profile.full_name.split[0]%>'s Friends <span class="text-gray-400">(<%= @profile.friends.size %>)</span></h2>

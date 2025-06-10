@@ -1,4 +1,4 @@
-<div class="b-friend flex justify-between gap-2 items-center">
+<div class="b-friend flex justify-between gap-2 items-center hover:bg-gray-200 rounded-sm p-1">
 
 	<% if find_friends(friend, current_user)  %>
     <div class="order-3 text-base text-red-500">
@@ -7,8 +7,8 @@
   <% end -%>
   
 
-  <div class="w-1/8">
-   	 <%= image_tag friend.avatar_url , class: "rounded-full" %>	      
+  <div class="w-1/11">
+   	 <%= image_tag avatar_url(friend) , class: "rounded-full" %>	      
   </div>
 
 	<div class="profile-info grow-1 flex flex-col">			
