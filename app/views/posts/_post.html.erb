@@ -9,8 +9,12 @@
       </div>
       <% if created_by_current_user? (post) %>
         <div class="b-actions flex gap-2  mt-2">
-            <%= link_to "edit", edit_post_path(post.id), class: "text-blue-600 hover:text-blue-800" %>
-            <%= button_to "delete", post_path(post), method: :delete, class: "text-blue-600 cursor-pointer hover:text-blue-800", data: {turbo_frame: "_top"} %>
+            <%= link_to edit_post_path(post.id) do %>
+            <svg class="fill-blue-600/80 w-5 h-5 cursor-pointer hover:fill-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>square-edit-outline</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>
+            <% end -%>
+            <%= button_to post_path(post), method: :delete, data: {turbo_confirm: "Are you sure? "} do %>
+            <svg class="fill-red-600/80 w-5 h-5 cursor-pointer hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-alert</title><path d="M17 4V6H3V4H6.5L7.5 3H12.5L13.5 4H17M4 19V7H16V19C16 20.1 15.1 21 14 21H6C4.9 21 4 20.1 4 19M19 15H21V17H19V15M19 7H21V13H19V7Z" /></svg>
+            <% end -%>
         </div>
       <% end -%>
     </div>
@@ -20,30 +24,40 @@
       <%= post_url(post)%>
     <p class="p-2 break-all"><%= post.body %></p>
     
-    <div class="b-bottom flex justify-between items-center pl-2 pr-2 pb-2">
-      <div class="b-time text-xs font-semibold">
+    <div class="b-bottom flex justify-between items-start pl-2 pr-2 pb-2">
+      <div class="b-time text-xs font-semibold w-xs">
         <%= post.updated_at.to_formatted_s(:short) %>
       </div>
 
-      <div class="b-likes flex text-blue-700">
-        
-        <div class="mr-2 flex gap-1">
-          <%= post.likes.size %> 
+      <div class="container flex justify-end items-center grow-0">
+           <div class="b-likes flex text-blue-700">
+          
+               <div class="mr-2 flex gap-1 items-center justify-center">
+                 <div class="text-sm text-gray-400 font-semibold"><%= post.likes.size %></div> 
 
-            <% if post.likes.exists?(user_id: current_user_id) %>
-              <%= button_to "unlike", unlike_post_path(post),method: :delete, class: "" %>
-            <% else %>
-              <%= button_to "like", like_post_path(post), method: :post%>
-            <% end -%>
-  
-        </div>
+                <% if post.likes.exists?(user_id: current_user_id) %>
+                  <%= button_to unlike_post_path(post),method: :delete, class: "cursor-pointer" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-gray-600/80 w-5 h-5"><path d="M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z" /></svg>
+                  <% end -%>
+                <% else %>
+                  <%= button_to like_post_path(post), method: :post, class: "cursor-pointer" do %>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-gray-600/80 w-5 h-5"><path d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z" /></svg>
+                  <% end -%>
+                <% end -%>
+              </div>  
+           </div>
 
-        <div class="flex gap-2 items-center">
-          <%= link_to "comments", post_path(post), data: {turbo_frame: "show_#{post.id}_comments", action: "click->comments#toggle"} %>
-          <div><%= count_post_comments(post) %></div>
-        </div>
+          <div class="flex gap-1 items-center justify-center">
+               <div class="text-sm text-gray-400 font-semibold"><%= count_post_comments(post) %></div>
+            <%= link_to post_path(post), data: {turbo_frame: "show_#{post.id}_comments", action: "click->comments#toggle"} do %>
+              <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-gray-600/80  pointer-events-none"><path d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10M6,7H18V9H6V7M6,11H15V13H6V11Z" /></svg>
+              <% end -%>
+         
+          </div>
 
       </div>
+      
+     
     </div>
 
     <div class="" id="post_<%= post.id %>_comments" data-comments-target="post_comments">
@@ -51,3 +65,8 @@
     </div>  
   </div>
 <% end -%>
+
+
+
+
+          

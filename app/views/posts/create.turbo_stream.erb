@@ -1,10 +1,5 @@
-<%= turbo_stream.remove "new_post" %>
 <%= turbo_stream.prepend "posts-container" do %>
   <%= render "post", post: @post %>
 <% end %>
 
 <%= turbo_stream.remove "postModal" %> 
-
-<%= turbo_frame_tag 'new_post' do %>
-  <%= render partial: "form", locals: { title: "New Post", post: Post.new } %>  
-<% end %>

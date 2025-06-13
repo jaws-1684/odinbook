@@ -20,3 +20,8 @@
 	z-index: 99;
 	top: 50px;
 }
+
+select#user_address_attributes_country {
+    width: 80px;
+    font-size: 14px;
+}

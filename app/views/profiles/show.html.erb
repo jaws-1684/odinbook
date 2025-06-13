@@ -9,9 +9,7 @@
      <%#= render "images" %>
 
      <%if @profile == current_user %>
-        <%= turbo_frame_tag "new_post", class: "flex flex-col w-full" do %>
            <%= render partial: "posts/new_post" %>
-        <% end %>
      <% end -%>
 
      <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm ">
@@ -31,3 +29,9 @@
 <%= content_for :friends do %>
    <%= render "profile_friends" %>
 <% end -%>
+
+<%= content_for :modal do %>
+    <%= turbo_frame_tag "new_post" %>
+<% end -%>
+
+
