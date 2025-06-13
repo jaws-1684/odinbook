@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
 	before_action :set_post, only: [:show, :edit, :update, :destroy, :like, :unlike]
+	before_action :ensure_frame_response, only: [:new, :create, :edit, :update]
 	
 	def index
 		@posts = Post.subscribed_to(current_user)
@@ -21,7 +22,7 @@ class PostsController < ApplicationController
       end
     else  	
       respond_to do |format|
-	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "", post: @post }) }
+	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "New Post", post: @post }) }
   		end
     end
   end
@@ -31,21 +32,19 @@ class PostsController < ApplicationController
 
 	def update
 		if @post.update(post_params)
-			redirect_to posts_path, status: :see_other, notice: "Post was successfully updated!"
+			flash[:notice] = "Post was successfully updated"
 		else
-			flash.now[:errors] = "There was an error updating your post."
-
 			respond_to do |format|
-	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "", post: @post }) }
+	    	format.turbo_stream { render turbo_stream: turbo_stream.replace('new_post', partial: 'posts/form', locals: { title: "Edit Post", post: @post }) }
   		end
 		end	
 	end
 
 	def destroy
 		@post.destroy
-		flash[:success] = "Post was successfully deleted!"
+		flash[:notice] = "Post was successfully deleted!"
 
-		redirect_to root_path, status: :see_other
+		redirect_to posts_path, status: :see_other
 	end
 
 	def like
@@ -65,6 +64,12 @@ class PostsController < ApplicationController
 	end
 
 	def post_params
-		params.expect(post: [:title, :body, :image_url])
+		params.expect(post: [:title, :body, :image])
 	end
+
+	def ensure_frame_response
+      return unless Rails.env.development?
+      redirect_to root_path unless turbo_frame_request?
+  end
+
 end

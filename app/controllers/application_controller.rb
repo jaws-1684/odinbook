@@ -5,17 +5,11 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   before_action :authenticate_user!
   before_action :set_user_id_cookie
-  before_action :configure_permitted_parameters, if: :devise_controller?
 
 
   protected
-   def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:username, :avatar_url, :full_name, :email, :password, :password_confirmation, :remember_me) }
-      devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:username, :full_name, :avatar_url, :email, :password, :password_confirmation, :current_password) }
-   end
 
-  private
-
+ 
   def set_user_id_cookie
     cookies[:current_user_id] = current_user.id if user_signed_in?
   end

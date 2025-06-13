@@ -2,6 +2,8 @@ class Post < ApplicationRecord
   belongs_to :user
   has_many :comments, as: :commentable
   has_many :likes, as: :likeable, dependent: :destroy
+  has_one_attached :image
+  
   
   validates :title, presence: true, length: { minimum: 5, maximum: 280 }
   validates :body, presence: true, length: {minimum: 20, maximum: 2000 }

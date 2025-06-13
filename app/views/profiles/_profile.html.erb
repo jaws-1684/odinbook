@@ -9,8 +9,10 @@
                      <div class="user-info size-full ml-6 flex justify-between items-start pr-8">
                         <div class="name">
                             <p class="text-2xl font-semibold text-gray-700"> <%= @profile.full_name %></p>
-                            <p class="text-xs text-gray-600"> <%= @profile.email %></p>
-                            <p>Country, City if any?</p>
+                              <p class="text-xs text-gray-600"> <%= @profile.email %></p>
+                              <% if current_user.city.present? && current_user.country.present? %>
+                               <p class="text-base text-gray-700"><strong><%= @profile.country_name(@profile.country) %>,&nbsp</strong><%= @profile.city %></p>
+                              <% end -%>
                         </div>
 
                          <% unless @profile == current_user %>
@@ -26,7 +28,7 @@
                         <% end -%>
 
                         <% if @profile == current_user %>
-                          <%= button_to "impl Edit profile", "#", class: "p-2 bg-gray-200 hover:bg-gray-300 text-blue-600 text-sm rounded-sm" %>
+                          <%= link_to "Edit profile", edit_user_registration_path(current_user), class: "mt-1 p-2 pl-4 pr-4 text-white rounded-sm bg-blue-500 font-semibold text-xs hover:bg-blue-400" %>
                         <% end -%>
                                     
                      </div>

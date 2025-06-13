@@ -8,6 +8,11 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   has_many :friend_requests, dependent: :destroy
+  has_one_attached :avatar
+  has_one :address, dependent: :destroy
+  accepts_nested_attributes_for :address, allow_destroy: true
+  delegate :city, :country, to: :address, allow_nil: true
+
   
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -26,33 +31,38 @@ class User < ApplicationRecord
   def friends
     sent = FriendRequest.where(user_id: self.id, status: 1).includes(:friend).map(&:friend)
     received = FriendRequest.where(friend_id: self.id, status: 1).includes(:user).map(&:user)
-    (sent + received).uniq
+    (sent + received).compact.uniq
   end
 
   def received_invitations
     received = FriendRequest.where(friend_id: self.id, status: 0).includes(:user).map(&:user)
-    received.uniq
+    received.compact.uniq
   end
 
   def sent_invitations
     sent = FriendRequest.where(user_id: self.id, status: 0).includes(:friend).map(&:friend)
-    sent.uniq
+    sent.compact.uniq
   end
 
   def self.search query
-    q = query.split(" ")
+    q = query.downcase.split(" ")
 
     result = []
     q.each do |term|
-      fixed_search = where('lower(full_name) LIKE ?', "#{query}")
+      fixed_search = where('lower(full_name) LIKE ?', "#{query.downcase}")
       unless fixed_search.empty?
         result << fixed_search
         break
       else
-        result << where("email LIKE ?", "%#{term}%").or(where("full_name LIKE ?", "%#{term}%")) 
+        result << where("email LIKE ?", "%#{term}%").or(where("lower(full_name) LIKE ?", "%#{term}%")) 
       end      
     end
     result.flatten.uniq
+  end
+
+  def country_name country
+    country = ISO3166::Country[country]
+    country.translations[I18n.locale.to_s] || country.common_name || country.iso_short_name
   end
 
 end

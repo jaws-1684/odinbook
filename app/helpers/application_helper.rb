@@ -19,14 +19,30 @@ module ApplicationHelper
       end
   end 
 
-
+  
 	def avatar_url(user, opts={})
 		size = opts[:size] || 40
-    if not user.avatar_url.empty?
-    	"#{user.avatar_url}"
+    if user.avatar.attached?
+    	user.avatar
+    elsif user.avatar_url.present?
+    	user.avatar_url
     else
       gravatar_for user.email,size
     end
+ 	end
+
+ 	def post_url post
+ 		if post.image.attached?
+    	image_tag(post.image, class: "w-full")
+    elsif post.image_url.present?
+     	image_tag(post.image_url, class: "w-full")
+    else
+    	""  	
+    end
+ 	end
+
+ 	def default_gravatar
+ 		"https://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce802?d=identicon"
  	end
 
  	private

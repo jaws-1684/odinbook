@@ -8,3 +8,15 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.feed-notice {
+	position: absolute;
+	z-index: 99;
+	top: 50px;
+}
+
+.info {
+	position: absolute;
+	z-index: 99;
+	top: 50px;
+}

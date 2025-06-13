@@ -10,13 +10,14 @@
       <% if created_by_current_user? (post) %>
         <div class="b-actions flex gap-2  mt-2">
             <%= link_to "edit", edit_post_path(post.id), class: "text-blue-600 hover:text-blue-800" %>
-            <%= button_to "delete", post_path(post), method: :delete, class: "text-blue-600 cursor-pointer hover:text-blue-800" %>
+            <%= button_to "delete", post_path(post), method: :delete, class: "text-blue-600 cursor-pointer hover:text-blue-800", data: {turbo_frame: "_top"} %>
         </div>
       <% end -%>
     </div>
    
-    <h2 class="font-semibold text-md pl-2 pb-2"><%= post.title %></h2>
-    <img src="<%= post.image_url %>" alt="" class="w-full">
+    <h2 class="font-semibold text-md pl-2 pb-2 overflow-x-hidden"><%= post.title %></h2>
+    <!-- Post image -->
+      <%= post_url(post)%>
     <p class="p-2 break-all"><%= post.body %></p>
     
     <div class="b-bottom flex justify-between items-center pl-2 pr-2 pb-2">
@@ -28,15 +29,15 @@
         
         <div class="mr-2 flex gap-1">
           <%= post.likes.size %> 
-       
-          <% unless current_user_id %>
+
             <% if post.likes.exists?(user_id: current_user_id) %>
-              <%= button_to "unlike", unlike_post_path(post),method: :delete %>
+              <%= button_to "unlike", unlike_post_path(post),method: :delete, class: "" %>
             <% else %>
               <%= button_to "like", like_post_path(post), method: :post%>
             <% end -%>
-          <% end -%>
+  
         </div>
+
         <div class="flex gap-2 items-center">
           <%= link_to "comments", post_path(post), data: {turbo_frame: "show_#{post.id}_comments", action: "click->comments#toggle"} %>
           <div><%= count_post_comments(post) %></div>

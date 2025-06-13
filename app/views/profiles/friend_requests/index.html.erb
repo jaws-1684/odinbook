@@ -12,9 +12,11 @@
 									     	<% else %>
 									     			<h2 class="text-2xl font-semibold text-gray-800 mb-4"><%= @profile.full_name.split[0]%>'s Friends <span class="text-gray-400">(<%= @profile.friends.size %>)</span></h2>
 									     	<% end -%>
-								  <% end -%>  
+
 
 								  	<%= render partial: "friends", collection: @profile.friends, as: :friend %>
+								  <% end -%>  
+
 						  </div>
  			 </div>
 <% end -%>

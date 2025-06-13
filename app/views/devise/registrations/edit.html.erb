@@ -2,74 +2,98 @@
 
         <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
 
-           <div class="b-left-sidebar max-w-xs p-2">
+           <div class="b-left-sidebar max-w-xs pt-2">
               <%= render partial: "shared/left-sidebar" %>
            </div>
 
            <div class="b-main-content w-[500px] h-auto flex flex-col gap-2 p-4 mb-2 bg-white rounded-xl border border-gray-400/50 mt-2 ml-2 ">
-              <%= link_to "Back", :back, class: "text-blue-600 cursor-pointer" %>
-              <h2 class="text-xl mb-4 text-center">Profile settings</h2>
+                    <div class="b-wrapper">
+                       <%= link_to "Back", :back, class: "text-blue-600 cursor-pointer" %>
+                        <h2 class="text-xl mb-4 text-center">Profile settings</h2>
+                    </div>
+                   
 
                     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
                       <%= render "devise/shared/error_messages", resource: resource %>
-                       <div class="field flex justify-start items-center gap-4">
-                        <%= image_tag avatar_url(current_user), class: "rounded-full size-24 border-2 border-blue-600 p-0.5" %>
-                        <%= f.file_field :avatar_url, autofocus: true, autocomplete: "email", class: "border-1 text-xs bg-gray-300 rounded-sm p-1 w-[60px]" %>
-                      </div>
+                      
+                      <div class="fields flex flex-col">
+                          <div class="field flex justify-start items-center gap-4">
+                          <%= image_tag avatar_url(current_user), class: "rounded-full size-24 border-2 border-blue-600 p-0.5" %>
+                          <%= f.file_field :avatar_url, autofocus: true, autocomplete: "email", class: "border-1 text-xs bg-gray-300 rounded-sm p-1 w-auto", accept: 'image/png, image/jpeg, image/jpg' %>
+                        </div>
 
-                      <div class="field">
-                        <%= f.label :email, "Email address", class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %><br />
-                        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
-                      </div>
+                        <div class="field">
+                          <%= f.label :email, "Email address", class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %>
+                          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
+                        </div>
 
-                      <hr class="text-gray-300 mt-2 mb-2">
-
-                      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-                      <% end %>
-
-                      <div class="field">
-                        <%= f.label :password, class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %> 
-                        <%= f.password_field :password, autocomplete: "new-password", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
-                       
-                      </div>
-
-
-
-                      <div class="field">
-                        <%= f.label :password_confirmation, class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %><br />
-                        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
-                      </div>
-
-                      <div class="field">
-                        <%= f.label :current_password, class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %><br />
-                        <%= f.password_field :current_password, autocomplete: "current-password", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
-                      </div>
-
-                      <div class="info-container flex justify-start items-start mt-2 gap-2">
-                          <div class="ico text-blue-600 mt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                            </svg>
+                        <%= f.fields_for :address, (resource.address || resource.build_address) do |address_form| %>
+                          <div class="field border-1 border-gray-200 rounded-sm mt-2 p-1">
+                            <%= address_form.label :country, "Country", class: "top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %>
+                            <%= address_form.country_select :country, autocomplete: "country", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-4" %>
                           </div>
-                          <div class="messages ">
-                            <i class="text-xs text-blue-600">Leave password field blank if you don't want to change it</i><br />
-
-                        <% if @minimum_password_length %>
-                          <em class="text-xs text-red-800"><%= @minimum_password_length %> characters minimum</em>
-                        <% end %>
-                          </div>  
                           
-           
+                          <div class="field">
+                            <%= address_form.label :city, "City", class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %>
+                            <%= address_form.text_field :city, autocomplete: "city", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
+                          </div>
+                        <% end %>
+                        
+                        <hr class="text-gray-300 mt-2 mb-2">
+
+                        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                        <% end %>
+
+                        <div class="field">
+                          <%= f.label :password, class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %> 
+                          <%= f.password_field :password, autocomplete: "new-password", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
+                         
+                        </div>
+
+
+
+                        <div class="field">
+                          <%= f.label :password_confirmation, class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %>
+                          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
+                        </div>
+
+                       <div class="field">
+                          <%= f.label :current_password, class: "relative top-3 left-3 pl-2 pr-2 text-base text-gray-800 bg-white mb-2" %>
+                          <%= f.password_field :current_password, autocomplete: "current-password", class: "border-1 border-gray-200 rounded-sm focus:ring-2 focus:ring-blue-500 p-1 w-full" %>
+                       </div>
+
+
+                        <hr class="text-gray-300 mt-2 mb-2">
+
+                      </div>
+                       
+                      <div class="info-container flex justify-between items-start mt-2 gap-2 h-12">
+                          <div class="ico text-blue-600 mt-2 flex gap-2 items-start justify-start">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill mt-1" viewBox="0 0 16 16">
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                              </svg>
+
+                              <div class="messages">
+                                <i class="text-xs text-blue-600">Leave password field blank if you don't want to change it</i><br />
+                                <% if @minimum_password_length %>
+                                  <em class="text-xs text-red-800"><%= @minimum_password_length %> characters minimum</em>
+                                <% end %>
+                              </div>  
+                          </div>
+                          
+                          
+                           <div class="actions text-end mt-2 mb-4">
+                          <%= f.submit "Save", class: "text-center p-1 cursor-pointer bg-green-500 hover:bg-green-400 w-[80px] rounded-sm text-white" %>
+                          </div>
                       </div>
 
-                      <div class="actions text-end mt-2 mb-4">
-                        <%= f.submit "Save", class: "text-center p-1 cursor-pointer bg-green-500 hover:bg-green-400 w-[80px] rounded-sm text-white" %>
-                      </div>
+                     
 
                        
                     <% end %>
-                    <div class="relative">
+                    <div class="bottom grow-1">
+                      <div class="relative">
                       <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-gray-300"></div>
                       </div>
@@ -78,12 +102,14 @@
                       </div>
                     </div>
                     
-                    <div class="btns flex justify-center gap-2 items-center">
+                    <div class="btns flex justify-center gap-2 items-center mt-2">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
                       </svg>
                       <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: " hover:bg-red-500 bg-red-600 w-full p-1 rounded-sm text-white cursor-pointer" %>
                     </div>
+                    </div>
+                    
                     
 
                 

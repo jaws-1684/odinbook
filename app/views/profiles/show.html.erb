@@ -6,17 +6,19 @@
         
 <%= content_for :main do %> 
   <div class="media-container w-[550px] h-full flex flex-col mb-2 gap-2">
-     <%= render "images" %>
+     <%#= render "images" %>
 
-     <%= turbo_frame_tag "new_post", class: "flex flex-col w-full" do %>
-        <%= render partial: "posts/new_post" %>
-     <% end %>
+     <%if @profile == current_user %>
+        <%= turbo_frame_tag "new_post", class: "flex flex-col w-full" do %>
+           <%= render partial: "posts/new_post" %>
+        <% end %>
+     <% end -%>
 
-     <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm mt-2">
+     <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm ">
         <%= turbo_stream_from "posts" %>
                 <div id="posts-container">
                   <% if @posts.any? %>
-                     <%= render @posts.includes(:user).order(created_at: :desc) %>
+                     <%= render @posts.includes(:user, :likes, :comments).order(created_at: :desc) %>
                   <% else %>
                      <%= render partial: "shared/posts/missing_posts", locals: {msg: post_msessage(@profile)} %>
                   <% end %> 

@@ -15,7 +15,7 @@
               <h2 class="text-2xl text-gray-600 font-semibold">Results</h2>
               <% @results.each do |user|%>
 
-                <div class=" flex justify-between items-center pr-2 mt-2">
+                <div class=" flex justify-between items-center pr-2 mt-4">
                   <% unless user == current_user %>
                         <%= link_to profile_path(user), data: {turbo_frame: "_top"} do %>
                             <div class="flex justify-start items-center gap-2 cursor-pointer hover:bg-gray-200 hover:rounded-sm p-1">
