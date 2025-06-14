@@ -1,8 +1,10 @@
-<div class="b-header mt-12">
+<%= content_for :login do %>
+<div class="b-new mt-18">
+  <div class="b-header mt-12">
   <h2 class="text-3xl mb-4 pb-4 text-center text-gray-700 font-semibold">Sign up</h2>
 </div>
 
-<div class="bg-[#ffffff] rounded-xl shadow-md flex flex-col justify-around p-4 g-4">
+<div class="bg-[#ffffff] rounded-xl shadow-md flex flex-col justify-around w-sm h-125 p-4 g-4">
  <div class="b-sign-up">
   <div class="b-go-back mb-4">
     <span>&#8592;</span> 
@@ -13,7 +15,7 @@
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
-      <div class="field flex justify-start items-center gap-4">
+      <div class="field flex justify-start items-center gap-4 mb-4">
             <%= image_tag default_gravatar, class: "rounded-full size-24 border-2 border-blue-600 p-0.5" %>
             <%= f.file_field :avatar, autofocus: true, class: "border-1 text-xs bg-gray-300 rounded-sm p-1 w-44" %>
       </div>
@@ -21,12 +23,12 @@
 
       <div class="field mb-2 flex flex-col gap-[2px]">
           <%= f.label :full_name, "Full name"%>
-          <%= f.text_field :full_name, autofocus: true, autocomplete: "full_name", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "John Doe" %>
+          <%= f.text_field :full_name, autofocus: true, autocomplete: "full_name", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-full pl-2 bg-gray-100 placeholder:italic", placeholder: "John Doe" %>
       </div>
 
       <div class="field mb-2 flex flex-col gap-[2px]">
           <%= f.label :email, "Email address"%>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic", placeholder: "johndoe@email.com" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: " text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm w-96 h-[30px] w-full pl-2 bg-gray-100 placeholder:italic", placeholder: "johndoe@email.com" %>
         </div>
 
       <div class="field field mb-2 field mb-4 flex flex-col gap-[2px]">
@@ -37,12 +39,12 @@
           <% end %>
         </div>
        
-        <%= f.password_field :password, autocomplete: "new-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-full pl-2 bg-gray-100 placeholder:italic" %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %></br>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-[310px] pl-2 bg-gray-100 placeholder:italic" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "text-sm border-1 border-gray-200/50 focus:border-blue-500/50 rounded-sm h-[30px] w-full pl-2 bg-gray-100 placeholder:italic" %>
       </div>
 
       <div class="field pt-4">
@@ -51,3 +53,5 @@
     <% end %>
 
 </div>
+
+<% end -%>

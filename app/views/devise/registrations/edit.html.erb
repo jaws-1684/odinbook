@@ -12,7 +12,7 @@
                       <div class="fields flex flex-col">
                           <div class="field flex justify-start items-center gap-4">
                           <%= image_tag avatar_url(current_user), class: "rounded-full size-24 border-2 border-blue-600 p-0.5" %>
-                          <%= f.file_field :avatar_url, autofocus: true, autocomplete: "email", class: "border-1 text-xs bg-gray-300 rounded-sm p-1 w-auto", accept: 'image/png, image/jpeg, image/jpg' %>
+                          <%= f.file_field :avatar, autofocus: true, autocomplete: "email", class: "border-1 text-xs bg-gray-300 rounded-sm p-1 w-auto", accept: 'image/png, image/jpeg, image/jpg' %>
                         </div>
 
                         <div class="field">

@@ -25,12 +25,13 @@
   <body>
     
      <%= render partial: "shared/nav" if user_signed_in? %>
-
     <main>
-        <div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200 font-roboto">
 
+        <div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200 font-roboto">
+            <%= yield :login %>
             <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
-                <%= yield %>
+              
+
                <div class="b-left-sidebar max-w-xs pl-2 pt-2 shrink-0">
                   <%= render partial: "shared/left-sidebar" if user_signed_in? %>
                </div>
@@ -53,9 +54,6 @@
       <div id="post-modal" class="new-post-container">
         <%= yield :modal%>
       </div>
-
-   
-      
     </main> 
 
   </body>

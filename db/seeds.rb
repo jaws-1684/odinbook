@@ -10,6 +10,7 @@
 User.destroy_all
 Post.destroy_all
 Comment.destroy_all
+Adreess.destroy_all
 FriendRequest.destroy_all
 
 names = [
