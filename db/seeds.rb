@@ -10,25 +10,69 @@
 User.destroy_all
 Post.destroy_all
 Comment.destroy_all
-Adreess.destroy_all
+Address.destroy_all
 FriendRequest.destroy_all
 
-names = [
-  "John Doe", "Jane Smith", "Alice Johnson", "Bob Brown", "Charlie Davis",
-  "David Miller", "Emily Wilson", "Frank Moore", "Grace Taylor", "Helen Clark"
+male_names = [
+  "John Doe",
+  "Bob Brown",
+  "Charlie Davis",
+  "David Miller",
+  "Frank Moore"
 ]
 
-names.each_with_index do |name, index|
-  User.create!(
+female_names = [
+  "Jane Smith",
+  "Alice Johnson",
+  "Emily Wilson",
+  "Grace Taylor",
+  "Helen Clark"
+]
+
+
+locations = {
+  "US" => "New York",
+  "GB" => "London",
+  "CA" => "Toronto",
+  "AU" => "Sydney",
+  "NZ" => "Auckland",
+  "DE" => "Berlin",
+  "FR" => "Paris",
+  "BR" => "São Paulo",
+  "ZA" => "Cape Town",
+  "JP" => "Tokyo"
+}
+
+male_names.each do |name|
+  user = User.create!(
     full_name: name,
     email: "#{name.split(' ').first.downcase}.#{name.split(' ').last.downcase}@example.com",
     password: "password",
     password_confirmation: "password",
-    avatar_url: "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
+    avatar_url: "https://api.dicebear.com/9.x/adventurer/svg?seed=Easton&backgroundColor=b6e3f4"
   )
 end
 
+female_names.each do |name|
+  
+  user = User.create!(
+    full_name: name,
+    email: "#{name.split(' ').first.downcase}.#{name.split(' ').last.downcase}@example.com",
+    password: "password",
+    password_confirmation: "password",
+    avatar_url: "https://api.dicebear.com/9.x/adventurer/svg?seed=Brooklynn&backgroundColor=c0aede"
+  )
+  
+end
+
 puts "Seeded #{User.count} users"
+
+country, city = locations.to_a.sample
+User.all.each do |user|
+ Address.find_or_create_by(user_id: user.id, city: city, country: country)
+end
+
+puts "Seeded #{Address.count} addresses"
 
 fake_posts = [
   {
@@ -179,13 +223,20 @@ end
 
 puts "Seeded #{Comment.count} comments"
 
-
-User.all.each do |user1|
-  User.all.each do |user2|
-    unless user1 == user2
-      FriendRequest.find_or_create_by(user_id: user1.id, friend_id: user2.id, status: 1)
+john_doe = User.find_by(full_name: "John Doe")
+User.all.reject {|user| user.full_name == "John Doe"}.each do |user1|
+  User.all.reject {|user| user.full_name == "John Doe"}.each do |user2|
+    unless user1 == user2 
+      FriendRequest.find_or_create_by(user_id: user1.id, friend_id: user2.id, status: 1)  
     end  
   end
 end
-
 puts "Seeded #{FriendRequest.count} friendships"
+
+User.all.each do |user|
+    unless user == john_doe 
+      FriendRequest.find_or_create_by(user_id: john_doe.id, friend_id: user.id, status: 0)  
+    end  
+end
+
+puts "Seeded #{FriendRequest.where(status: 0).count} invitations"
