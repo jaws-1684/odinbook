@@ -1,11 +1,4 @@
-<div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200">
-
-        <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
-
-           <div class="b-left-sidebar max-w-xs pt-2">
-              <%= render partial: "shared/left-sidebar" %>
-           </div>
-
+  <%= content_for :main do %>
            <div class="b-main-content w-[500px] h-auto flex flex-col gap-2 p-4 mb-2 bg-white rounded-xl border border-gray-400/50 mt-2 ml-2 ">
                     <div class="b-wrapper">
                        <%= link_to "Back", :back, class: "text-blue-600 cursor-pointer" %>
@@ -115,13 +108,8 @@
                 
           </div>
 
-           <div class="b-right-sidebar grow-1 text-end p-2">
-              <%= render partial: "shared/right-sidebar" %>
-           </div>
+  <% end -%>
+         
 
-        </div>  
-
-
-</div>
-
+   
 

@@ -27,10 +27,36 @@
      <%= render partial: "shared/nav" if user_signed_in? %>
 
     <main>
-      <div class="login-container flex flex-col w-dvw justify-start items-center min-h-screen bg-gray-200 font-roboto">
-        <%= yield %>
+        <div id="page-container" class="b-page-container min-h-lvh w-full flex flex-col justify-start items-center bg-gray-200 font-roboto">
+
+            <div class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
+                <%= yield %>
+               <div class="b-left-sidebar max-w-xs pl-2 pt-2 shrink-0">
+                  <%= render partial: "shared/left-sidebar" if user_signed_in? %>
+               </div>
+
+               <div class="b-wrapper h-auto w-full flex flex-col gap-2 p-2">
+                   
+                    <%= yield :profile %>
+
+                    <div class="container flex justify-between gap-2">
+                        <%= yield :main %>
+                        <%= yield :friends %>
+                        <%= yield :invitations %>
+                    </div>
+                  <%= yield :right_sidebar %>      
+               </div>
+
+            </div>  
+        </div>
+
+      <div id="post-modal" class="new-post-container">
+        <%= yield :modal%>
       </div>
-    </main>
+
+   
+      
+    </main> 
 
   </body>
 </html>

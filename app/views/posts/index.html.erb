@@ -2,6 +2,7 @@
 
 <%= content_for :main do %>
 
+<div class="container flex flex-col w-[550px] gap-2">
     <%= render "new_post" %>
     
     <div class="b-posts w-full h-auto border-1 border-gray-400/50 bg-white rounded-xl text-sm overflow-y-auto">
@@ -15,10 +16,14 @@
         </div>
     </div>
 <% end -%>
-
+</div>
 <%= content_for :modal do %>
     <%= turbo_frame_tag "new_post" %>
 <% end -%>
 
 
-
+<%= content_for :right_sidebar do %>
+    <div class="b-right-sidebar grow-1 text-end p-2">
+      <%= render partial: "shared/right-sidebar" %>
+   </div>
+<% end -%>

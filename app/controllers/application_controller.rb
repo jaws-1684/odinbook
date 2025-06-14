@@ -20,9 +20,7 @@ class ApplicationController < ActionController::Base
       return "turbo_rails/frame" if turbo_frame_request?
 
       case controller_name
-        when "posts" then "feed"
-        when "profiles" then "profile"
-        when "friend_requests" then "profile"  
+        when "registrations" then "login"
         else "application"
       end
   end
