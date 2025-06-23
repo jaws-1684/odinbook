@@ -12,16 +12,16 @@
 .feed-notice {
 	position: absolute;
 	z-index: 99;
-	top: 50px;
+	top: 3.125rem;
 }
 
 .info {
 	position: absolute;
 	z-index: 99;
-	top: 50px;
+	top: 3.125rem;
 }
 
 select#user_address_attributes_country {
     max-width: auto;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
