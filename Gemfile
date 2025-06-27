@@ -76,3 +76,4 @@ gem "requestjs-rails", "~> 0.0.13"
 gem "simple_form", "~> 5.3"
 gem "aws-sdk-s3", require: false
 gem 'country_select'
+gem "letter_opener", group: :development

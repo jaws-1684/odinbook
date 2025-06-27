@@ -2,7 +2,7 @@
     <div class="search-input shrink-0 mt-5" data-controller="search">
       <div class="search">
         <%= form_with url: "/search/", method: :get do |form| %>
-          <%= form.text_field :query, placeholder: "enter something", class: "rounded-xl p-2 pl-8 bg-[#F2F2F2] w-sm text-xs border border-gray-400/50 focus:ring-2 focus:ring-blue-500" %>
+          <%= form.text_field :query, placeholder: "enter something", class: "rounded-xl p-2 pl-8 bg-[#F2F2F2] w-2xs text-xs border border-gray-400/50 focus:ring-2 focus:ring-blue-500" %>
           <%= form.submit "search", class: "cursor-pointer text-base ml-1 text-gray-600", data: { turbo_frame: "search" } %>
         <% end -%>
       </div>
