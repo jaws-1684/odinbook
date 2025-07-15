@@ -17,37 +17,36 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+
     <%= javascript_importmap_tags %>
+    
   </head>
 
-  <body>
-    
+  <body data-controller="go-up">
      <%= render partial: "shared/nav" if user_signed_in? %>
-     <div class="wrapper h-lvh max-w-dvw overflow-x-hidden">
+     <div class="wrapper h-lvh max-w-dvw">
         <div class="main flex flex-col h-full">
-
            <div id="page-container" class="b-page-container grow-1 w-full flex flex-col justify-start items-center bg-gray-200 font-roboto">
                       <%= yield :login %>
                       <div id="wrapper" class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
-                        
-
+                  
+                        <%= yield :info %>
+                        <%= yield :notice %>
                          <div class="b-left-sidebar max-w-xs pl-2 pt-2 shrink-0">
                             <%= render partial: "shared/left-sidebar" if user_signed_in? %>
                          </div>
-
                          <div class="b-wrapper h-auto w-full flex flex-col gap-2 p-2">
                              
                               <%= yield :profile %>
-
                               <div class="container flex justify-between gap-2">
                                   <%= yield :main %>
                                   <%= yield :friends %>
                                   <%= yield :invitations %>
                               </div>
-                            <%= yield :right_sidebar %>      
+                           
                          </div>
+                          <%= yield :right_sidebar %>      
                       </div>
-
                   <div id="post-modal" class="new-post-container">
                     <%= yield :modal%>
                   </div>
@@ -64,7 +63,7 @@
         </footer>
      </div>
     
-    
+    <style><%= yield :stylesheets %></style>
   </body>
 </html>
 

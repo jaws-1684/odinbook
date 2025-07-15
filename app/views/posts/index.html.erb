@@ -1,7 +1,6 @@
 <% content_for :title do %>feed<% end %>
 
 <%= content_for :main do %>
-
 <div class="container flex flex-col w-[550px] gap-2">
     <%= render "new_post" %>
     
@@ -15,8 +14,9 @@
             <% end -%>
         </div>
     </div>
+</div>    
 <% end -%>
-</div>
+
 <%= content_for :modal do %>
     <%= turbo_frame_tag "new_post" %>
 <% end -%>
@@ -26,4 +26,11 @@
     <div class="b-right-sidebar grow-1 text-end p-2">
       <%= render partial: "shared/right-sidebar" %>
    </div>
+<% end -%>
+
+<%= content_for :notice do %>
+    <%= render partial: "/shared/notice" %>
+<% end -%>
+<%= content_for :info do %>
+    <%= render partial: "/shared/info" %>
 <% end -%>
