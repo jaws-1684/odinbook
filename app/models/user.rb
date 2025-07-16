@@ -14,11 +14,11 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :address, allow_destroy: true
   delegate :city, :country, to: :address, allow_nil: true
 
-  
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       return user unless user.new_record?
-      
+
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
       user.full_name = auth.info.name # assuming the user model has a name
@@ -30,44 +30,48 @@ class User < ApplicationRecord
   end
 
   def friends
-    sent = FriendRequest.where(user_id: self.id, status: 1).includes(:friend).map(&:friend)
-    received = FriendRequest.where(friend_id: self.id, status: 1).includes(:user).map(&:user)
-    (sent + received).compact.uniq
+    parse_invitations_with(:user, friend_id: self, status: 1) +
+      parse_invitations_with(:friend, user_id: self, status: 1)
   end
 
   def received_invitations
-    received = FriendRequest.where(friend_id: self.id, status: 0).includes(:user).map(&:user)
-    received.compact.uniq
+    parse_invitations_with(:user, friend_id: self, status: 0)
   end
 
   def sent_invitations
-    sent = FriendRequest.where(user_id: self.id, status: 0).includes(:friend).map(&:friend)
-    sent.compact.uniq
+    parse_invitations_with(:friend, user_id: self, status: 0)
   end
 
-  def self.search query
+  def self.search(query)
+    if query.length > 100 || !query.match?(/\w+('\w+)*/)
+      return "not a valid input"
+    end
     q = query.downcase.split(" ")
 
     result = []
     q.each do |term|
-      fixed_search = where('lower(full_name) LIKE ?', "#{query.downcase}")
+      fixed_search = where("lower(full_name) LIKE ?", "#{query.downcase}")
       unless fixed_search.empty?
         result << fixed_search
         break
       else
-        result << where("email LIKE ?", "%#{term}%").or(where("lower(full_name) LIKE ?", "%#{term}%")) 
-      end      
+        result << where("email LIKE ?", "%#{term}%").or(where("lower(full_name) LIKE ?", "%#{term}%"))
+      end
     end
     result.flatten.uniq
   end
 
-  def country_name country
+  def country_name(country)
     country = ISO3166::Country[country]
     country.translations[I18n.locale.to_s] || country.common_name || country.iso_short_name
   end
 
   private
     def send_welcome_email
-      UserMailer.with(user: self).welcome_email.deliver 
+      UserMailer.with(user: self).welcome_email.deliver
+    end
+
+    def parse_invitations_with transform, **params
+      FriendRequest.where(params).includes(transform).map(&transform).compact.uniq
     end
 end
