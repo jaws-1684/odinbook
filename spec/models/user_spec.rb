@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   #bots
   let!(:harry) { create(:user, full_name: "Harry Bot") }
   let!(:bond) { create(:user, full_name: "Bond Bot") }
-  let! (:bots) {[harry, bond]}
+  let (:bots) {[harry, bond]}
   let(:tested_user_0) { create(:user, :with_friends, friends: bots) }
   let(:tested_user_1) { create(:user, :with_received_invitations, invitators: bots) }
   let(:tested_user_2) { create(:user, :with_sent_invitations, invitees: bots) }
