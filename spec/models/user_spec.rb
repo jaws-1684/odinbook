@@ -1,24 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject(:current_user) {create(:user, full_name: "Oscar Bot")}
-  #Friend bots
-  subject(:harry) {create(:user, full_name: "Harry Bot")}
-  subject(:bond) {create(:user, full_name: "Bond bot")}
-  let (:friends) { [harry, bond]}
-  
+  #bots
+  let!(:harry) { create(:user, full_name: "Harry Bot") }
+  let!(:bond) { create(:user, full_name: "Bond Bot") }
+  let! (:bots) {[harry, bond]}
+  let(:tested_user_0) { create(:user, :with_friends, friends: bots) }
+  let(:tested_user_1) { create(:user, :with_received_invitations, invitators: bots) }
+  let(:tested_user_2) { create(:user, :with_sent_invitations, invitees: bots) }
+
   describe "#friends" do
-    subject(:oscar_friends) { current_user.friends }
+    subject(:tested_users_friends) { tested_user_0.friends }
     context 'when checking a user with friends' do
-      before do
-        [ harry, bond ].each { |f| FriendRequest.create!(user_id: f.id, friend_id: current_user.id, status: 1) }
-      end
       it { is_expected.to be_an(Array) }
       it 'returns an array of friends' do
          expect(subject).to eql [ harry, bond ]
       end
       it 'never includes the user themselves in their friends list' do
-        expect(subject.include? current_user).to be false
+        expect(subject.include? tested_user_0).to be false
       end
       it 'is uniq' do
         expect(subject.uniq).to eql subject
@@ -26,74 +25,55 @@ RSpec.describe User, type: :model do
     end
 
     context 'when checking a user with no friends' do
-      before do
-        FriendRequest.destroy_all
-      end
       it 'returns an empty array when the user has no friends' do
-        expect(subject).to be_empty
+        expect(harry.friends).to be_empty
       end
     end
   end
 
   describe "#received_invitations" do
-    subject(:oscar_received_invitations) { current_user.received_invitations }
+    subject(:tested_user_received_invitations) { tested_user_1.received_invitations }
     context "when checking a user with received invitations" do
-      before do
-        [ harry, bond ].each { |f| FriendRequest.create!(user_id: f.id, friend_id: current_user.id, status: 0) }
-      end
        it { is_expected.to be_an(Array) }
        it 'returns an array of invitations' do
          expect(subject).to eql [ harry, bond ]
       end
     end
     context "when checking a user with no received invitations" do
-      before do
-        FriendRequest.destroy_all
-      end
       it 'returns an empty array when the user has no invitations' do
-        expect(subject).to be_empty
+        expect(harry.received_invitations).to be_empty
       end
     end
   end
 
   describe "#sent_invitations" do
-    subject(:oscar_sent_invitations) { current_user.sent_invitations }
+    subject(:tested_user_2_sent_invitations) { tested_user_2.sent_invitations }
     context "when checking a user with sent invitations" do
-      before do
-        [ harry, bond ].each { |f| FriendRequest.create!(user_id: current_user.id, friend_id: f.id, status: 0) }
-      end
        it { is_expected.to be_an(Array) }
        it 'returns an array of invitations' do
          expect(subject).to eql [ harry, bond ]
       end
     end
     context "when checking a user with no sent invitations" do
-      before do
-        FriendRequest.destroy_all
-      end
       it 'returns an empty array when the user has no invitations' do
-        expect(subject).to be_empty
+        expect(harry.sent_invitations).to be_empty
       end
     end
   end
 
   describe "#search" do
-    before do
-      [ harry, bond ].each { |f| FriendRequest.create!(user_id: f.id, friend_id: current_user.id, status: 1) }
-    end
-
     context "when checking an valid search input" do
       it "returns users with the matching full_name" do
-        expect(described_class.search("Bond Bot")).to eql [bond]
+        expect(described_class.search("Bond Bot")).to eq [bond]
       end
       it "returns the matching first names" do
         expect(described_class.search("Bond")).to eql [bond]
       end
 
       context "returns the matching surnames" do
-        [:bond, :harry, :current_user].each do |username|
+        [:bond, :harry].each do |username|
           it "matches #{username} bot " do
-            expect(described_class.search("bot").include?(friends.sample)).to be true 
+            expect(described_class.search("bot").include?(bots.sample)).to be true 
           end
         end  
       end
@@ -122,16 +102,16 @@ RSpec.describe User, type: :model do
   describe "#country_name" do
     context "when a user has a country" do
       before do
-        Address.create!(user_id: current_user.id, city: 'Paris', country: 'FR')
+        create(:address, user: tested_user_0)
       end
       it "returns the country name" do
-        expect(current_user.country_name(current_user.country)).to eq "France"
-        end
+        expect(tested_user_0.country_name(tested_user_0.country)).to eq "France"
       end
+    end
 
     context "when a user does not have a country" do
       it "returns nil" do
-        expect(bond.country_name).to be nil
+        expect(tested_user_0.country_name).to be nil
       end
     end
   end
