@@ -25,7 +25,7 @@ FactoryBot.define do
       end
     end
 
-     trait :with_received_invitations do
+    trait :with_received_invitations do
       transient do
         invitators { [] }
       end
@@ -34,9 +34,15 @@ FactoryBot.define do
         context.invitators.each { |f| create(:friend_request, :received, user: f, friend: user) }
       end
     end
-  end
-
-  trait :with_posts do
-      after(:create) { |user| create( :post, user: user) }
+    
+    trait :with_posts do
+        after(:create) { |user| create( :post, user: user) }
     end
+    trait :with_post_comments do
+      transient do
+        commentable_type { }
+      end
+        after(:create) { |user, context| create( :comment, user: user, commentable: context.commentable_type) }
+    end
+  end
 end
