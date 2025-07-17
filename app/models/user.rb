@@ -43,11 +43,10 @@ class User < ApplicationRecord
   end
 
   def self.search(query)
-    if query.length > 100 || !query.match?(/\w+('\w+)*/)
-      return "not a valid input"
+    unless query.length < 100 && query.match?(/^[a-z ,.'-]+$/i)
+      return []
     end
     q = query.downcase.split(" ")
-
     result = []
     q.each do |term|
       fixed_search = where("lower(full_name) LIKE ?", "#{query.downcase}")
@@ -61,8 +60,9 @@ class User < ApplicationRecord
     result.flatten.uniq
   end
 
-  def country_name(country)
-    country = ISO3166::Country[country]
+  def country_name(c=country)
+    return nil unless c
+    country = ISO3166::Country[c]
     country.translations[I18n.locale.to_s] || country.common_name || country.iso_short_name
   end
 

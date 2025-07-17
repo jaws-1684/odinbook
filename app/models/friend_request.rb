@@ -6,9 +6,8 @@ class FriendRequest < ApplicationRecord
   belongs_to :friend, class_name: "User"
 
   enum :status, { sent: 0, accepted: 1}
-
- def cannot_friend_yourself
-  error.add(:friend_id, "can't be yourself") if user.id == friend.id
- end
-
+  
+  def cannot_friend_yourself
+    error.add(:friend_id, "can't be yourself") if user.id == friend.id
+  end
 end

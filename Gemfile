@@ -51,6 +51,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem 'factory_bot_rails'
+  gem "guard", "~> 2.19"
+  gem "guard-rspec", "~> 4.7"
+
 end
 
 group :development do
