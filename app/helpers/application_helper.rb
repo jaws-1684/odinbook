@@ -33,7 +33,7 @@ module ApplicationHelper
 
  	def post_url post
  		if post.image.attached?
-    	image_tag(post.image, class: "w-full")
+    	image_tag(post.image, class: "w-full max-h-100")
     elsif post.image_url.present?
      	image_tag(post.image_url, class: "w-full")
     else

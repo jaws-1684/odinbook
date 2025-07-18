@@ -24,9 +24,9 @@
 
   <body data-controller="go-up">
      <%= render partial: "shared/nav" if user_signed_in? %>
-     <div class="wrapper h-lvh max-w-dvw">
-        <div class="main flex flex-col h-full">
-           <div id="page-container" class="b-page-container grow-1 w-full flex flex-col justify-start items-center bg-gray-200 font-roboto">
+     <div class="wrapper min-h-lvh max-w-dvw">
+        <div class="main flex flex-col min-h-lvh">
+           <div id="page-container" class="b-page-container grow-2 w-full flex flex-col justify-start items-center bg-gray-200 font-roboto">
                       <%= yield :login %>
                       <div id="wrapper" class="b-wrapper h-full w-6xl flex mt-18 gap-4 mb-2">
                   
@@ -53,8 +53,8 @@
           </div>  
       </div>
        
-        <footer id="footer" class="footer bg-gray-200 p-2 border-t-1 border-gray-300">
-          <div class=" footer-content text-base flex items-center justify-center text-gray-400">
+        <footer id="footer" class="footer p-2 border-t-1 border-gray-300">
+          <div class="footer-content text-base flex items-center justify-center text-gray-400">
                 <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="#" class="hover:text-gray-700 transition-colors">Odinbook™</a>
                       <span class="mx-2">•</span> 
                 <a href="https://github.com/jaws-1684" target="_blank" class="hover:text-gray-700 transition-colors">GitHub</a>
