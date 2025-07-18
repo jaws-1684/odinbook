@@ -55,18 +55,20 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: "https://odinbook-ijrj.onrender.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:         "smtp.gmail.com",
-    port:            587,
-    domain:          "example.com",
-    user_name:      ENV["GMAIL_USERNAME"],
-    password:       ENV["GMAIL_PASSWORD"],
-    authentication:  "plain",
-    enable_starttls: true,
-    open_timeout:    5,
-    read_timeout:    5 }
+  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  # This is the secret sendgrid API key which was issued during API key creation
+  :password => ENV["SEND_GRID_KEY"], 
+  :domain => 'https://odinbook-ijrj.onrender.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
+
+  :enable_starttls_auto => true
+
+}
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
   #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
