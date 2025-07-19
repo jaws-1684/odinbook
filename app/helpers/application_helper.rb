@@ -22,12 +22,13 @@ module ApplicationHelper
   
 	def avatar_url(user, opts={})
 		size = opts[:size] || 40
+		email = user.email || "example@mail.com"
 		begin
 			return user.avatar if user.avatar.attached?
 			return user.avatar_url if user.avatar_url.present?
 			gravatar_for(user.email, size)
 	  rescue  
-      gravatar_for user.email,size
+      gravatar_for email,size
     end
     
  	end
