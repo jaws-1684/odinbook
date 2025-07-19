@@ -18,6 +18,7 @@ A **social media** application built with Ruby on Rails, featuring real-time pos
 
 ### Backend
 - **Ruby on Rails** - Full-stack web framework
+- **Hotwired Turbo and Stimulus **
 - **PostgreSQL** - Primary database
 - **Devise** - Authentication and authorization
 - **OAuth** - GitHub and Google social login integration
