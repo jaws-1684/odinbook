@@ -24,7 +24,7 @@ module ApplicationHelper
 		size = opts[:size] || 40
 		email = "example@mail.com"
 		begin
-			return user.avatar if user.avatar.attached?
+			return user.avatar.url if user.avatar.attached?
 			return user.avatar_url if user.avatar_url.present?
 			gravatar_for(user.email, size)
 	  rescue  
@@ -36,7 +36,7 @@ module ApplicationHelper
  	def post_url post
  		begin
 	 		if post.image.attached?
-	    	image_tag(post.image, class: "w-full max-h-100")
+	    	image_tag(post.image.url, class: "w-full max-h-100")
 	    elsif post.image_url.present?
 	     	image_tag(post.image_url, class: "w-full")
 	    else
