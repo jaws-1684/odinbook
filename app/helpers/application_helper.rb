@@ -33,13 +33,17 @@ module ApplicationHelper
  	end
 
  	def post_url post
- 		if post.image.attached?
-    	image_tag(post.image, class: "w-full max-h-100")
-    elsif post.image_url.present?
-     	image_tag(post.image_url, class: "w-full")
-    else
-    	""  	
-    end
+ 		begin
+	 		if post.image.attached?
+	    	image_tag(post.image, class: "w-full max-h-100")
+	    elsif post.image_url.present?
+	     	image_tag(post.image_url, class: "w-full")
+	    else
+	    	""  	
+	    end
+  	rescue
+  		""
+  	end
  	end
 
  	def default_gravatar
