@@ -59,7 +59,7 @@
   
   <div class="container fixed top-22 left-20 bg-white w-80 min-h-42 rounded-xl p-2 text-gray-900" data-controller="clipboard">
    <h2 class="text-2xl text-blue-400 font-semibold">Dummy accounts</h2>
-
+   <p id="copy-result"></p>
    <h3 class="text-xl mt-2">John Doe (no friends and posts)</h3>
    <div class="flex justify-between gap-2">
        <p>Login:</p>
@@ -78,23 +78,24 @@
               <button class="text-gray-700 hover:text-gray-500 cursor-pointer" data-action="click->clipboard#copy"><svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none" width="20" height="20" viewBox="0 0 408 480"><path fill="currentColor" d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/></svg></button>
    </div>
 
-   <h3 class="mt-2 text-xl">Alice Johnson</h3>
-  <div class="flex justify-between gap-2">
+   <h3 class="text-xl mt-2">Alice Johnson (friends and posts)</h3>
+   <div class="flex justify-between gap-2">
        <p>Login:</p>
-       <div class="rounded-sm bg-gray-200 border-1 border-gray-300 pl-1 mb-1 grow-1 text-blue-600 overflow-y-scroll">
-            <p>alice.johnson@example.com</p>
-
+       <div class="rounded-sm bg-gray-200 pl-1 mb-1 grow-1 text-blue-600 border-1 border-gray-300 flex">
+         <p id="value">alice.johnson@example.com</p>
        </div>
-       <button data-action="click->clipboard#copy" class="text-gray-700 hover:text-gray-500 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 408 480"><path fill="currentColor" d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/></svg></button>
+       <button class="text-gray-700 hover:text-gray-500 cursor-pointer" data-action="click->clipboard#copy"><svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none" width="20" height="20" viewBox="0 0 408 480"><path fill="currentColor" d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/></svg></button>
    </div>
-     <div class="flex justify-between gap-2">
+ 
+  <div class="flex justify-between gap-2">
        <p>Password:</p>
-      <div class="rounded-sm bg-gray-200 grow-1 pl-1 pr-1 text-green-600 border-1 border-gray-300">
-           <p>password</p>
-              
+       <div class="rounded-sm bg-gray-200 grow-1 pl-1 pr-1 text-green-600 border-1 border-gray-300 flex justify-between">
+           <p id="value">password</p>
+          
        </div>
-     <button class="text-gray-700 hover:text-gray-500 cursor-pointer" data-action="click->clipboard#copy"><svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none" width="20" height="20" viewBox="0 0 408 480"><path fill="currentColor" d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/></svg></button>
+              <button class="text-gray-700 hover:text-gray-500 cursor-pointer" data-action="click->clipboard#copy"><svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none" width="20" height="20" viewBox="0 0 408 480"><path fill="currentColor" d="M299 5v43H43v299H0V48q0-18 12.5-30.5T43 5h256zm64 86q17 0 29.5 12.5T405 133v299q0 18-12.5 30.5T363 475H128q-18 0-30.5-12.5T85 432V133q0-17 12.5-29.5T128 91h235zm0 341V133H128v299h235z"/></svg></button>
    </div>
+  
 
    <p class="mt-2 text-sm">Also you can log in to any dummy account you see on site following the same pattern or getting the users email from the dummys profile page</p>
   </div>
