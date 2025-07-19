@@ -57,18 +57,7 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "https://odinbook-ijrj.onrender.com" }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-  # This is the secret sendgrid API key which was issued during API key creation
-  :password => ENV["SEND_GRID_KEY"], 
-  :domain => 'https://odinbook-ijrj.onrender.com',
-  :address => 'smtp.sendgrid.net',
-  :port => 587,
-  :authentication => :plain,
-
-  :enable_starttls_auto => true
-
-}
+  config.action_mailer.delivery_method = :resend
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
   #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
