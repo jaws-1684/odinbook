@@ -83,4 +83,7 @@ gem "simple_form", "~> 5.3"
 gem "aws-sdk-s3", require: false
 gem 'country_select'
 gem "letter_opener", group: :development
+
+gem "sendgrid-ruby", "~> 6.7"
+
 gem "resend", "~> 0.22.0"
