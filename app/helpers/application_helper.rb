@@ -22,13 +22,14 @@ module ApplicationHelper
   
 	def avatar_url(user, opts={})
 		size = opts[:size] || 40
-    if user.avatar.attached?
-    	user.avatar
-    elsif user.avatar_url.present?
-    	user.avatar_url
-    else
+		begin
+			return user.avatar if user.avatar.attached?
+			return user.avatar_url if user.avatar_url.present?
+			gravatar_for(user.email, size)
+	  rescue  
       gravatar_for user.email,size
     end
+    
  	end
 
  	def post_url post
