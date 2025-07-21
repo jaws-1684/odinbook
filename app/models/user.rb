@@ -30,8 +30,8 @@ class User < ApplicationRecord
   end
 
   def friends
-    parse_invitations_with(:user, friend_id: self, status: 1) +
-      parse_invitations_with(:friend, user_id: self, status: 1)
+    (parse_invitations_with(:user, friend_id: self, status: 1) +
+      parse_invitations_with(:friend, user_id: self, status: 1)).uniq
   end
 
   def received_invitations
