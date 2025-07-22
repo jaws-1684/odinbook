@@ -5,8 +5,6 @@ class CommentsController < ApplicationController
 	end
 
 	def edit
-	  @comment = Comment.find(params[:id])
-
 	  respond_to do |format|
 	    format.turbo_stream { render partial: "comments/form", locals: { comment: @comment } }
 	    format.html 

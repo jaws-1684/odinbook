@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-	before_action :set_post, only: [:show, :edit, :update, :destroy, :like, :unlike]
+	before_action :set_post, only: [:show, :like, :unlike]
+	before_action :set_user_post, only: [:edit, :update, :destroy]
 	before_action :ensure_frame_response, only: [:new, :create, :edit, :update]
 	
 	def index
@@ -61,6 +62,10 @@ class PostsController < ApplicationController
 
 	def set_post
 		@post = Post.find(params[:id])
+	end
+
+	def set_user_post
+		@post = current_user.posts.find(params[:id])
 	end
 
 	def post_params
