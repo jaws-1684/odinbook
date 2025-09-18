@@ -10,4 +10,7 @@ class FriendRequest < ApplicationRecord
   def cannot_friend_yourself
     error.add(:friend_id, "can't be yourself") if user.id == friend.id
   end
+  def accept!
+     update(status: :accepted)
+  end
 end

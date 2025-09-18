@@ -25,3 +25,14 @@ select#user_address_attributes_country {
     max-width: auto;
     font-size: 0.875rem;
 }
+
+@media (max-width: 768px) {
+	.container-dummies {
+		display: none;
+	}
+}
+@media (max-width: 1024px) {
+	.container-dummies {
+		display: none;
+	}
+}

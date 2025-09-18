@@ -34,6 +34,10 @@ class User < ApplicationRecord
       parse_invitations_with(:friend, user_id: self, status: 1)).uniq
   end
 
+  def requests
+    FriendRequest.where(user_id: self).or(FriendRequest.where(friend_id: self))
+  end
+
   def received_invitations
     parse_invitations_with(:user, friend_id: self, status: 0)
   end

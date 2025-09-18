@@ -20,11 +20,6 @@ class FriendRequestsController < ApplicationController
   private
 
   def set_friend_request
-    @friend_request = current_user.friend_requests.find(params[:id])
+    @friend_request = current_user.requests.find(params[:id])
   end
-
-  def accept!
-     update(status: :accepted)
-  end
-  
 end
