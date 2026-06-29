@@ -26,7 +26,22 @@ env:
     - POSTGRES_PASSWORD
     - POSTGRES_USER
     - DB_PORT
-
+accessories:
+  postgres:
+    image: postgres:17 # Use the correct version for your app
+    host: 62.171.183.69 
+    port: 5432
+    env:
+      clear:
+        DB_USER: book
+        DB: book_production
+      secret:
+        - POSTGRES_PASSWORD
+        - POSTGRES_USER
+    files:
+      - config/init.sql:/docker-entrypoint-initdb.d/setup.sql    
+    directories:
+      - data:/var/lib/postgresql/data
 
 proxy:
   ssl: true
