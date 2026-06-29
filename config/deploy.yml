@@ -26,6 +26,14 @@ env:
     - POSTGRES_PASSWORD
     - POSTGRES_USER
     - DB_PORT
+    - GITHUB_CLIENT_ID
+    - GITHUB_CLIENT_SECRET
+    - GOOGLE_CLIENT_ID
+    - GOOGLE_CLIENT_SECRET
+    - AWS_S3_BUCKET
+    - AWS_S3_ID
+    - AWS_S3_SECRET
+    - RESEND_API_KEY
 accessories:
   postgres:
     image: postgres:17 # Use the correct version for your app
