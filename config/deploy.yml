@@ -42,7 +42,7 @@ accessories:
     service: whereswaldo-postgres
     env:
       clear:
-        DB_USER: whereswaldo
+        DB_USER: jaws
         DB: book_production
       secret:
         - POSTGRES_PASSWORD

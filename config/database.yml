@@ -89,19 +89,19 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: whereswaldo_production
+    database: book_production
     username: <%= ENV["POSTGRES_USER"] %>
     password: <%= ENV["POSTGRES_PASSWORD"] %>
     host: <%= ENV["DB_HOST"] %>
   cache:
     <<: *primary_production
-    database: whereswaldo_production_cache
+    database: book_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: whereswaldo_production_queue
+    database: book_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: whereswaldo_production_cable
+    database: book_production_cable
     migrations_paths: db/cable_migrate
