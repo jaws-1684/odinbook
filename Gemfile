@@ -87,3 +87,5 @@ gem "letter_opener", group: :development
 gem "sendgrid-ruby", "~> 6.7"
 
 gem "resend", "~> 0.22.0"
+
+gem "dotenv", "~> 3.1"
